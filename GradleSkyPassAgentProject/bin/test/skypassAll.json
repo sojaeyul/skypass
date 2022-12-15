@@ -1,0 +1,761 @@
+{
+	"id": "63588bc3fda4b0e4462c1cd4",
+	"loyaltySystem": {
+		"clientCode": "DPA",
+		"programCode": "DPA"
+	},
+	"service": {
+		"name": "MASSIVE_DATA_EXPORT",
+		"version": 1
+	},
+	"recordsCount": 6,
+	"statistics": {
+		"createdAt": "2022-10-26T01:22:11.266Z",
+		"processingStartedAt": "2022-10-26T01:22:11.142Z",
+		"processingEndedAt": "2022-10-26T01:22:11.266Z",
+		"successes": 6,
+		"errors": 0
+	},
+	"records": [
+		{
+			"index": 0,
+			"identifier": "63588bc3fda4b0e4442c1cd4",
+			"status": "SUCCESS",
+			"response": {
+				"MDEMeta": {
+					"created": {
+						"at": "2022-10-26T01:22:11.148Z",
+						"via": {
+							"execution": "BATCH",
+							"batch": {
+								"identifier": "63588bc3fda4b0e4452c1cd4",
+								"file": "MDE.SERVICE.DPA.UAT.1A_DPA_LCP_FEED.63588bc3fda4b0e4442c1cd4.0.D26102022.T012211.json"
+							}
+						}
+					},
+					"targetSystem": "DPA",
+					"feedId": "63588bc3fda4b0e4442c1cd4",
+					"totalResourceCount": 6,
+					"entailedResources": [
+						{
+							"resource": "ACTIVITY",
+							"count": 3
+						},
+						{
+							"resource": "BILLING",
+							"count": 3
+						}
+					]
+				},
+				"serviceMDEEntries": [
+					{
+						"membershipResourceId": "63588af8384eb0e4564a0440",
+						"membershipId": "4333332252",
+						"exportReasons": [
+							{
+								"resource": "ACTIVITY",
+								"action": "MANUAL_ADJUSTMENT",
+								"operation": "ADD",
+								"activityId": "63588b43384eb0e4654a0440"
+							}
+						],
+						"serviceMDEData": {
+							"activities": [
+								{
+									"data": {
+										"id": "63588b43384eb0e4654a0440",
+										"meta": {
+											"created": {
+												"at": "2022-10-26T01:20:03.718Z",
+												"by": {
+													"system": "1A",
+													"organization": "1A",
+													"sign": "0005SO",
+													"username": "SOYMAK",
+													"officeId": "IST1A0950"
+												},
+												"via": {
+													"execution": "ONLINE",
+													"online": {
+														"channel": "AGENT_UI"
+													}
+												}
+											}
+										},
+										"related": [
+											{
+												"type": "activityDetail",
+												"id": "16425",
+												"category": "CHILD"
+											}
+										],
+										"subType": "CREATION",
+										"status": "COMMITTED",
+										"isHidden": false,
+										"membership": {
+											"programCode": "DPA",
+											"membershipId": "4333332252",
+											"details": {
+												"type": "membership",
+												"id": "63588af8384eb0e4564a0440"
+											}
+										},
+										"transaction": {
+											"total": [
+												{
+													"amount": "50",
+													"code": "SAP",
+													"category": "STANDARD"
+												}
+											],
+											"split": [
+												{
+													"subTotal": [
+														{
+															"amount": "50",
+															"code": "SAP",
+															"category": "STANDARD"
+														}
+													],
+													"process": "EXT_FORCED",
+													"operations": [
+														{
+															"amount": "50",
+															"code": "SAP",
+															"category": "STANDARD",
+															"id": "63588b43384eb0e4674a0440",
+															"subType": "EARNING",
+															"effectiveAt": "2022-10-26T01:20:03.718Z",
+															"expiresAt": "2032-12-31T23:59:59.000Z"
+														}
+													],
+													"historyId": "63588b43384eb0e4664a0440"
+												}
+											]
+										},
+										"history": [
+											{
+												"id": "63588b43384eb0e4664a0440",
+												"subType": "MANUAL_ADJUSTMENT",
+												"createdAt": "2022-10-26T01:20:03.718Z",
+												"status": "COMMITTED",
+												"authorizedBy": {
+													"system": "1A",
+													"organization": "1A",
+													"sign": "0005SO",
+													"username": "SOYMAK",
+													"officeId": "IST1A0950"
+												},
+												"earningCalculationDetails": {}
+											}
+										],
+										"snapshot": {
+											"details": {
+												"type": "activityDetail",
+												"id": "16425"
+											}
+										}
+									},
+									"included": {
+										"activityDetail": {
+											"16425": {
+												"type": "activityDetail",
+												"id": "16425",
+												"related": [
+													{
+														"type": "activity",
+														"id": "63588b43384eb0e4654a0440",
+														"category": "PARENT"
+													}
+												],
+												"history": [
+													{
+														"status": "CREATED_COMMITTED",
+														"details": {
+															"type": "activity",
+															"id": "63588b43384eb0e4654a0440"
+														}
+													}
+												],
+												"partner": {
+													"code": "FFPDEPT",
+													"name": "SKYPASS"
+												},
+												"referenceDate": "2022-10-26",
+												"classification": "Manual Adjustment",
+												"reason": "Complaint",
+												"activityType": "MANUAL_ADJUSTMENT",
+												"description": "Testing origin earn 1"
+											}
+										}
+									}
+								}
+							]
+						}
+					},
+					{
+						"membershipResourceId": "63588af8384eb0e4564a0440",
+						"membershipId": "4333332252",
+						"exportReasons": [
+							{
+								"resource": "BILLING",
+								"action": "CREATE_BILLING",
+								"operation": "ADD",
+								"billingId": "63588b43fda4b0e41c2c1cd4"
+							}
+						],
+						"serviceMDEData": {
+							"billings": [
+								{
+									"data": {
+										"id": "63588b43fda4b0e41c2c1cd4",
+										"exportStatus": "NOT_BILLED",
+										"membershipId": "4333332252",
+										"partnerCode": "FFPDEPT",
+										"productCode": "Manual Adjustment",
+										"earningRuleType": "DEFAULT",
+										"activityDate": "2022-10-26",
+										"entryDate": "2022-10-26",
+										"conversionDate": "2022-10-26",
+										"createdAt": "2022-10-26",
+										"awardGroup": "DEFAULT",
+										"award": {
+											"amount": "50",
+											"code": "SAP",
+											"category": "STANDARD"
+										},
+										"billingMembership": {
+											"name": {
+												"firstName": "SelcukMde",
+												"lastName": "MdeTransaction"
+											},
+											"tier": {
+												"maintain": false
+											}
+										},
+										"transaction": {
+											"agreementAmount": {
+												"monetaryAmount": "0.3",
+												"currencyCode": "USD"
+											},
+											"coefficient": 0.006,
+											"equivalentBaseAmount": {
+												"currencyCode": "USD"
+											},
+											"equivalentAdditionalAmount": {
+												"currencyCode": "EUR"
+											}
+										},
+										"calculationResult": {
+											"status": "SUCCESS"
+										},
+										"billingAction": {
+											"id": "63588b43384eb0e4664a0440",
+											"actionSubType": "MANUAL_ADJUSTMENT"
+										},
+										"billingActivity": {
+											"id": "63588b43384eb0e4654a0440",
+											"activitySubType": "CREATION",
+											"activityType": "MANUAL_ADJUSTMENT",
+											"activityDescription": "Testing origin earn 1"
+										}
+									}
+								}
+							]
+						}
+					},
+					{
+						"membershipResourceId": "63588af8384eb0e4564a0440",
+						"membershipId": "4333332252",
+						"exportReasons": [
+							{
+								"resource": "ACTIVITY",
+								"action": "MANUAL_ADJUSTMENT",
+								"operation": "ADD",
+								"activityId": "63588b51c188b0e487a23f06"
+							}
+						],
+						"serviceMDEData": {
+							"activities": [
+								{
+									"data": {
+										"id": "63588b51c188b0e487a23f06",
+										"meta": {
+											"created": {
+												"at": "2022-10-26T01:20:17.108Z",
+												"by": {
+													"system": "1A",
+													"organization": "1A",
+													"sign": "0005SO",
+													"username": "SOYMAK",
+													"officeId": "IST1A0950"
+												},
+												"via": {
+													"execution": "ONLINE",
+													"online": {
+														"channel": "AGENT_UI"
+													}
+												}
+											}
+										},
+										"related": [
+											{
+												"type": "activityDetail",
+												"id": "16426",
+												"category": "CHILD"
+											}
+										],
+										"subType": "CREATION",
+										"status": "COMMITTED",
+										"isHidden": false,
+										"membership": {
+											"programCode": "DPA",
+											"membershipId": "4333332252",
+											"details": {
+												"type": "membership",
+												"id": "63588af8384eb0e4564a0440"
+											}
+										},
+										"transaction": {
+											"total": [
+												{
+													"amount": "10000",
+													"code": "SAP",
+													"category": "STANDARD"
+												}
+											],
+											"split": [
+												{
+													"subTotal": [
+														{
+															"amount": "10000",
+															"code": "SAP",
+															"category": "STANDARD"
+														}
+													],
+													"process": "EXT_FORCED",
+													"operations": [
+														{
+															"amount": "10000",
+															"code": "SAP",
+															"category": "STANDARD",
+															"id": "63588b51c188b0e489a23f06",
+															"subType": "EARNING",
+															"effectiveAt": "2022-10-26T01:20:17.108Z",
+															"expiresAt": "2032-12-31T23:59:59.000Z"
+														}
+													],
+													"historyId": "63588b51c188b0e488a23f06"
+												}
+											]
+										},
+										"history": [
+											{
+												"id": "63588b51c188b0e488a23f06",
+												"subType": "MANUAL_ADJUSTMENT",
+												"createdAt": "2022-10-26T01:20:17.108Z",
+												"status": "COMMITTED",
+												"authorizedBy": {
+													"system": "1A",
+													"organization": "1A",
+													"sign": "0005SO",
+													"username": "SOYMAK",
+													"officeId": "IST1A0950"
+												},
+												"earningCalculationDetails": {}
+											}
+										],
+										"snapshot": {
+											"details": {
+												"type": "activityDetail",
+												"id": "16426"
+											}
+										}
+									},
+									"included": {
+										"activityDetail": {
+											"16426": {
+												"type": "activityDetail",
+												"id": "16426",
+												"related": [
+													{
+														"type": "activity",
+														"id": "63588b51c188b0e487a23f06",
+														"category": "PARENT"
+													}
+												],
+												"history": [
+													{
+														"status": "CREATED_COMMITTED",
+														"details": {
+															"type": "activity",
+															"id": "63588b51c188b0e487a23f06"
+														}
+													}
+												],
+												"partner": {
+													"code": "FFPDEPT",
+													"name": "SKYPASS"
+												},
+												"referenceDate": "2022-10-26",
+												"classification": "Manual Adjustment",
+												"reason": "Mistake",
+												"activityType": "MANUAL_ADJUSTMENT",
+												"description": "test orginal earning 2"
+											}
+										}
+									}
+								}
+							]
+						}
+					},
+					{
+						"membershipResourceId": "63588af8384eb0e4564a0440",
+						"membershipId": "4333332252",
+						"exportReasons": [
+							{
+								"resource": "BILLING",
+								"action": "CREATE_BILLING",
+								"operation": "ADD",
+								"billingId": "63588b51fda4b0e41e2c1cd4"
+							}
+						],
+						"serviceMDEData": {
+							"billings": [
+								{
+									"data": {
+										"id": "63588b51fda4b0e41e2c1cd4",
+										"exportStatus": "NOT_BILLED",
+										"membershipId": "4333332252",
+										"partnerCode": "FFPDEPT",
+										"productCode": "Manual Adjustment",
+										"earningRuleType": "DEFAULT",
+										"activityDate": "2022-10-26",
+										"entryDate": "2022-10-26",
+										"conversionDate": "2022-10-26",
+										"createdAt": "2022-10-26",
+										"awardGroup": "DEFAULT",
+										"award": {
+											"amount": "10000",
+											"code": "SAP",
+											"category": "STANDARD"
+										},
+										"billingMembership": {
+											"name": {
+												"firstName": "SelcukMde",
+												"lastName": "MdeTransaction"
+											},
+											"tier": {
+												"maintain": false
+											}
+										},
+										"transaction": {
+											"agreementAmount": {
+												"monetaryAmount": "60",
+												"currencyCode": "USD"
+											},
+											"coefficient": 0.006,
+											"equivalentBaseAmount": {
+												"currencyCode": "USD"
+											},
+											"equivalentAdditionalAmount": {
+												"currencyCode": "EUR"
+											}
+										},
+										"calculationResult": {
+											"status": "SUCCESS"
+										},
+										"billingAction": {
+											"id": "63588b51c188b0e488a23f06",
+											"actionSubType": "MANUAL_ADJUSTMENT"
+										},
+										"billingActivity": {
+											"id": "63588b51c188b0e487a23f06",
+											"activitySubType": "CREATION",
+											"activityType": "MANUAL_ADJUSTMENT",
+											"activityDescription": "test orginal earning 2"
+										}
+									}
+								}
+							]
+						}
+					},
+					{
+						"membershipResourceId": "63588af8384eb0e4564a0440",
+						"membershipId": "4333332252",
+						"exportReasons": [
+							{
+								"resource": "ACTIVITY",
+								"action": "PURCHASE",
+								"operation": "ADD",
+								"activityId": "63588b77c188b0e48ea23f06"
+							}
+						],
+						"serviceMDEData": {
+							"activities": [
+								{
+									"data": {
+										"id": "63588b77c188b0e48ea23f06",
+										"meta": {
+											"created": {
+												"at": "2022-10-26T01:20:55.642Z",
+												"by": {
+													"system": "1A",
+													"organization": "1A",
+													"sign": "0005SO",
+													"username": "SOYMAK",
+													"officeId": "IST1A0950"
+												},
+												"via": {
+													"execution": "ONLINE",
+													"online": {
+														"channel": "AGENT_UI"
+													}
+												}
+											}
+										},
+										"related": [
+											{
+												"type": "activityDetail",
+												"id": "16427",
+												"category": "CHILD"
+											},
+											{
+												"type": "purchase",
+												"id": "63588b77c188b0e48da23f06",
+												"category": "PARENT"
+											}
+										],
+										"subType": "CREATION",
+										"status": "COMMITTED",
+										"isHidden": false,
+										"membership": {
+											"programCode": "DPA",
+											"membershipId": "4333332252",
+											"details": {
+												"type": "membership",
+												"id": "63588af8384eb0e4564a0440"
+											}
+										},
+										"transaction": {
+											"total": [
+												{
+													"amount": "-7000",
+													"code": "SAP",
+													"category": "STANDARD"
+												}
+											],
+											"split": [
+												{
+													"subTotal": [
+														{
+															"amount": "-7000",
+															"code": "SAP",
+															"category": "STANDARD"
+														}
+													],
+													"process": "EXT_FORCED",
+													"operations": [
+														{
+															"amount": "50",
+															"code": "SAP",
+															"category": "STANDARD",
+															"id": "63588b77c188b0e490a23f06",
+															"subType": "BURNING",
+															"effectiveAt": "2022-10-26T01:20:55.642Z",
+															"linkedEarningId": "63588b43384eb0e4674a0440"
+														},
+														{
+															"amount": "6950",
+															"code": "SAP",
+															"category": "STANDARD",
+															"id": "63588b77c188b0e491a23f06",
+															"subType": "BURNING",
+															"effectiveAt": "2022-10-26T01:20:55.642Z",
+															"linkedEarningId": "63588b51c188b0e489a23f06"
+														}
+													],
+													"historyId": "63588b77c188b0e48fa23f06"
+												}
+											],
+											"accumulatedPayments": [
+												{
+													"subType": "AWARDS",
+													"awards": {
+														"amount": "7000",
+														"code": "SAP"
+													}
+												}
+											]
+										},
+										"history": [
+											{
+												"id": "63588b77c188b0e48fa23f06",
+												"subType": "PURCHASE",
+												"createdAt": "2022-10-26T01:20:55.642Z",
+												"status": "COMMITTED",
+												"committedAt": "2022-10-26T01:20:55.813Z",
+												"committedBy": {
+													"system": "1A",
+													"organization": "1A",
+													"sign": "0005SO",
+													"username": "SOYMAK",
+													"officeId": "IST1A0950"
+												},
+												"confirmationCode": "MxnQFoaBGgedQN",
+												"authorizedBy": {
+													"system": "1A",
+													"organization": "1A",
+													"sign": "0005SO",
+													"username": "SOYMAK",
+													"officeId": "IST1A0950"
+												}
+											}
+										],
+										"snapshot": {
+											"details": {
+												"type": "activityDetail",
+												"id": "16427"
+											}
+										}
+									},
+									"included": {
+										"activityDetail": {
+											"16427": {
+												"type": "activityDetail",
+												"id": "16427",
+												"related": [
+													{
+														"type": "activity",
+														"id": "63588b77c188b0e48ea23f06",
+														"category": "PARENT"
+													}
+												],
+												"history": [
+													{
+														"status": "CREATED_COMMITTED",
+														"details": {
+															"type": "activity",
+															"id": "63588b77c188b0e48ea23f06"
+														}
+													}
+												],
+												"partner": {
+													"code": "AVIS",
+													"name": "Avis"
+												},
+												"referenceDate": "2022-10-26",
+												"catalogueReference": "AVIS_PREMIUM",
+												"activityType": "CAR_RENTAL",
+												"description": "AVIS car rental - Premium",
+												"cancellable": true,
+												"car": {
+													"carClassType": "LUX",
+													"pickUp": {
+														"location": {
+															"name": "IST"
+														},
+														"at": "2022-10-27T00:00:00"
+													},
+													"return": {
+														"location": {
+															"name": "IST"
+														},
+														"at": "2022-10-30T00:00:00"
+													},
+													"bookingReference": "213ASD",
+													"bookedAt": "2022-10-27T00:00:00.000Z"
+												},
+												"awardReceiver": {
+													"membershipId": "4333332252",
+													"name": {
+														"firstName": "SelcukMde",
+														"lastName": "MdeTransaction"
+													}
+												},
+												"price": {
+													"base": {
+														"awardsAmount": 7000,
+														"awardsCode": "SAP"
+													}
+												}
+											}
+										}
+									}
+								}
+							]
+						}
+					},
+					{
+						"membershipResourceId": "63588af8384eb0e4564a0440",
+						"membershipId": "4333332252",
+						"exportReasons": [
+							{
+								"resource": "BILLING",
+								"action": "CREATE_BILLING",
+								"operation": "ADD",
+								"billingId": "63588b77fda4b0e4222c1cd4"
+							}
+						],
+						"serviceMDEData": {
+							"billings": [
+								{
+									"data": {
+										"id": "63588b77fda4b0e4222c1cd4",
+										"exportStatus": "NOT_BILLED",
+										"membershipId": "4333332252",
+										"partnerCode": "AVIS",
+										"productCode": "AVIS_PREMIUM",
+										"earningRuleType": "DEFAULT",
+										"activityDate": "2022-10-26",
+										"entryDate": "2022-10-26",
+										"conversionDate": "2022-10-26",
+										"createdAt": "2022-10-26",
+										"awardGroup": "DEFAULT",
+										"award": {
+											"amount": "-7000",
+											"code": "SAP",
+											"category": "STANDARD"
+										},
+										"billingMembership": {
+											"name": {
+												"firstName": "SelcukMde",
+												"lastName": "MdeTransaction"
+											}
+										},
+										"transaction": {
+											"agreementAmount": {
+												"monetaryAmount": "-60",
+												"currencyCode": "USD"
+											},
+											"equivalentBaseAmount": {
+												"currencyCode": "USD"
+											},
+											"equivalentAdditionalAmount": {
+												"currencyCode": "EUR"
+											}
+										},
+										"calculationResult": {
+											"status": "SUCCESS"
+										},
+										"billingAction": {
+											"id": "63588b77c188b0e48fa23f06",
+											"actionSubType": "PURCHASE"
+										},
+										"billingActivity": {
+											"id": "63588b77c188b0e48ea23f06",
+											"confirmationCode": "MxnQFoaBGgedQN",
+											"activitySubType": "CREATION",
+											"activityType": "CAR_RENTAL",
+											"activityDescription": "AVIS car rental - Premium"
+										}
+									}
+								}
+							]
+						}
+					}
+				]
+			}
+		}
+	]
+}
