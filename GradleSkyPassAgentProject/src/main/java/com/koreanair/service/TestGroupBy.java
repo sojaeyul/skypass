@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 import com.koreanair.dto.Sales;
@@ -48,6 +49,12 @@ public class TestGroupBy {
 		
         Map<SalesKey, List<Sales>> collect = dtos.stream()
                 .collect(Collectors.groupingBy(SalesKey::new));//Method Reference
+        
+        
+        for (Entry<SalesKey, List<Sales>> entrySet : collect.entrySet()) {
+            System.out.println(entrySet.getKey() + " : " + entrySet.getValue());
+        }
+        
         // then
         int sum = 0;
         System.out.println("=======================================");
@@ -57,12 +64,12 @@ public class TestGroupBy {
             System.out.println(salesKey.hashCode() + " :: key:value = " + salesKey + ":" + list);
         	//System.out.println("key:value = " + salesKey + " :: size = "+ list);
         	        	
-            Comparator<Sales> storeIdReverse = Comparator.comparing(Sales::getStoreId);//내림차순
-            Comparator<Sales> saleReverse = Comparator.comparing(Sales::getSales)
+            Comparator<Sales> storeIdASC = Comparator.comparing(Sales::getStoreId);//내림차순
+            Comparator<Sales> saleDESC = Comparator.comparing(Sales::getSales)
             											.reversed();//오름차순
         	list.sort(Comparator.comparing(Sales::getYyyymm)
-        							.thenComparing(storeIdReverse)
-        							.thenComparing(saleReverse));
+        							.thenComparing(storeIdASC)
+        							.thenComparing(saleDESC));
         	        
         	
         	
