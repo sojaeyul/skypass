@@ -1,7 +1,5 @@
 package com.koreanair;
 
-import java.io.IOException;
-import java.text.ParseException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,19 +13,22 @@ import org.quartz.JobKey;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.SchedulerFactory;
-import org.quartz.SimpleScheduleBuilder;
 import org.quartz.SimpleTrigger;
 import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
 import org.quartz.UnableToInterruptJobException;
 import org.quartz.impl.StdSchedulerFactory;
 import org.quartz.impl.matchers.GroupMatcher;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.koreanair.common.quartz.MyJobListener;
 import com.koreanair.common.quartz.MyTriggerListener;
 
 public class ETLJobLauncher {
  
+	private final static Logger log = LoggerFactory.getLogger(ETLJobLauncher.class);
+	
     // Scheduler 객체 생성
     private static SchedulerFactory factory = null;
     private static Scheduler scheduler = null;
@@ -77,6 +78,12 @@ public class ETLJobLauncher {
     
 	public static void main(String[] args) throws Exception  {
 
+        log.trace("trace!!!!!");
+        log.debug("debug!!!!"); 
+        log.info("info!!!!!");
+        log.warn("warn!!!!!");
+        log.error("error!!!!");
+        
         // Scheduler 실행
         start();	        
 

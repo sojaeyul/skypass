@@ -16,11 +16,26 @@ public class MyBatisConnectionFactory {
  
     static {
         try {
+        	
+            String envResource = "config/environments.properties";            
+            Reader envReader = Resources.getResourceAsReader(envResource);            
+        	
             String resource = "config/mybatis-config.xml";
-            Reader reader = Resources.getResourceAsReader(resource);
+            Reader reader = Resources.getResourceAsReader(resource);            
  
             if (sqlSessionFactory == null) {
-                sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
+            	String skypassInstance = System.getProperty("skypass.instance");
+            	
+                Properties properties = new Properties();
+                properties.load(envReader);
+                
+                Properties prop = new Properties();
+                prop.put("driver", properties.getProperty(skypassInstance+".db.driver"));
+                prop.put("url", properties.getProperty(skypassInstance+".db.url"));
+                prop.put("username", properties.getProperty(skypassInstance+".db.username"));
+                prop.put("password", properties.getProperty(skypassInstance+".db.password"));
+                
+                sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader, prop);
             }
         }
         catch (FileNotFoundException fileNotFoundException) {

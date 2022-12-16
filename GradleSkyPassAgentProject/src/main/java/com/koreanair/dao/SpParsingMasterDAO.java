@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 
 import com.koreanair.common.db.MybatisModelImpl;
+import com.koreanair.service.CreateJsonParsingDataService;
 
 public class SpParsingMasterDAO {
 	
@@ -77,6 +78,14 @@ public class SpParsingMasterDAO {
     	i = this.mybatisModelImpl.deleteData(sqlSession, contentVO, DAONameS, MethodNameS);
     	
     	return i;
+	}
+	
+	
+	public static void main(String[] args) throws Exception {
+		SpParsingMasterDAO dao = new SpParsingMasterDAO();
+		List<HashMap<String, Object>> list = dao.jsonContentList(new HashMap<String, Object>());
+		
+		list.forEach(System.out::println);
 	}
 	
 }

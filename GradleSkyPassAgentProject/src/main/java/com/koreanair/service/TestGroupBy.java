@@ -50,18 +50,18 @@ public class TestGroupBy {
         Map<SalesKey, List<Sales>> collect = dtos.stream()
                 .collect(Collectors.groupingBy(SalesKey::new));//Method Reference
         
-        
+        /*
         for (Entry<SalesKey, List<Sales>> entrySet : collect.entrySet()) {
             System.out.println(entrySet.getKey() + " : " + entrySet.getValue());
         }
-        
+        */
         // then
         int sum = 0;
         System.out.println("=======================================");
         for (SalesKey salesKey : collect.keySet()) {
         	List<Sales> list = collect.get(salesKey);
         	
-            System.out.println(salesKey.hashCode() + " :: key:value = " + salesKey + ":" + list);
+            //System.out.println(salesKey.hashCode() + " :: key:value = " + salesKey + ":" + list);
         	//System.out.println("key:value = " + salesKey + " :: size = "+ list);
         	        	
             Comparator<Sales> storeIdASC = Comparator.comparing(Sales::getStoreId);//내림차순
