@@ -30,7 +30,7 @@ create table SP_PARSING_MASTER_LOG
     ,action VARCHAR(50)
     ,createdAt date  
     ,jsonData VARCHAR(4000)
-    ,process VARCHAR(10),
+    ,process VARCHAR(10)
     ,creaeDate date NOT NULL    
 );
 -- 테이블 삭제시 시퀀스도 같이 삭제 처리
