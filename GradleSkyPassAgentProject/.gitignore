@@ -14,7 +14,7 @@ build/
 .settings
 .springBeans
 .sts4-cache
-logs
+logs/
 bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
@@ -72,3 +72,4 @@ deploy
 ### VS Code ###
 .vscode/
 bin/main/application.yml
+/skypass_etl.2022-12-16.log

@@ -83,7 +83,7 @@ public class ETLJobLauncher {
 
         // JOB Data 객체 생성
         JobDataMap jobDataMap = new JobDataMap();
-        jobDataMap.put("message", "Hello, Quartz!!!");
+        jobDataMap.put("message", "SkyPass ETL Agent Start!!!");
         
         // JobDetail 설정
         JobDetail jobDetail = JobBuilder.newJob(ETLMainJob.class)
