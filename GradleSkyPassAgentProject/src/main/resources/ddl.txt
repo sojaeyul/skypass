@@ -1,0 +1,40 @@
+-- 시퀀스 생성	
+CREATE SEQUENCE seq_ttt;	
+create table SP_PARSING_MASTER
+(
+     seq int not null default nextval('seq_ttt')
+    ,membershipId VARCHAR(20) NOT NULL
+    ,membershipResourceId VARCHAR(50) NOT NULL 
+    ,resource VARCHAR(20) NOT NULL
+    ,operation VARCHAR(10) NOT NULL
+    ,action VARCHAR(50)
+    ,createdAt date  
+    ,jsonData VARCHAR(4000)
+    ,creaeDate date NOT NULL
+);
+-- 테이블 삭제시 시퀀스도 같이 삭제 처리
+ALTER SEQUENCE seq_ttt OWNED BY SP_PARSING_MASTER.seq; 
+
+-- index
+CREATE INDEX SP_PARSING_MASTER_IDX1 ON SP_PARSING_MASTER (seq);
+--==================================================================
+-- 시퀀스 생성	
+CREATE SEQUENCE seq_ttt_log;	
+create table SP_PARSING_MASTER_LOG
+(
+     seq int not null default nextval('seq_ttt_log')
+    ,membershipId VARCHAR(20) NOT NULL
+    ,membershipResourceId VARCHAR(50) NOT NULL      
+    ,resource VARCHAR(20) NOT NULL
+    ,operation VARCHAR(10) NOT NULL
+    ,action VARCHAR(50)
+    ,createdAt date  
+    ,jsonData VARCHAR(4000)
+    ,process VARCHAR(10),
+    ,creaeDate date NOT NULL    
+);
+-- 테이블 삭제시 시퀀스도 같이 삭제 처리
+ALTER SEQUENCE seq_ttt_log OWNED BY SP_PARSING_MASTER_LOG.seq; 
+
+-- index
+CREATE INDEX SP_PARSING_MASTER_LOG_IDX1 ON SP_PARSING_MASTER_LOG (seq);

@@ -17,7 +17,25 @@
 		OFFSET 0 ROWS FETCH NEXT 500000 ROWS ONLY	
 	</select>
     <insert id="jsonDataInsert" parameterType="java.util.HashMap">
-        INSERT INTO SP_PARSING_MASTER (jsonData, creaeDate) VALUES (#{jsonData}, now())
+        INSERT INTO SP_PARSING_MASTER (
+			    membershipId
+			    ,membershipResourceId     
+			    ,resource
+			    ,operation
+			    ,action
+			    ,createdAt
+			    ,jsonData
+			    ,creaeDate
+        ) VALUES (
+			    #{membershipId}
+			    ,#{membershipResourceId}        
+			    ,#{resource}
+			    ,#{operation}
+			    ,#{action}
+			    ,#{createdAt}
+			    ,#{jsonData }       							   	
+			    ,now()
+        )
     </insert>
     <update id="jsonDataUpdate" parameterType="java.util.HashMap">
     </update>    

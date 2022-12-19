@@ -42,7 +42,8 @@ public class ETLMainJob implements InterruptableJob {
 	        ///////////////////////////////////////////////////////////////////////////
 	        //1. 파싱데이터 생성
 	        CreateJsonParsingDataService service = new CreateJsonParsingDataService();
-	        service.createParsingData();
+	        service.createMoveParsingData();
+	        //service.createParsingDataSmaple();
 	        
 	        //2. Thread
 	        bizThreadCall();

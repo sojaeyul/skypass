@@ -2,13 +2,17 @@ package com.koreanair.dao;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
 
 import org.apache.ibatis.session.SqlSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.koreanair.common.db.MybatisModelImpl;
-import com.koreanair.service.CreateJsonParsingDataService;
+
 
 public class SpParsingMasterDAO {
+	private final static Logger log = LoggerFactory.getLogger(SpParsingMasterDAO.class);
 	
 	private MybatisModelImpl mybatisModelImpl = null;
     public SpParsingMasterDAO() throws Exception{
@@ -32,13 +36,20 @@ public class SpParsingMasterDAO {
 
     }
     
-	public int jsonSave(String jsonData) throws Exception {
+	public int jsonSave(HashMap<String, Object> contentVO) throws Exception {
 		int i = 0;
 		String DAONameS = "SP_PARSING_MASTER";
-    	String MethodNameS = "jsonDataInsert";
-    	
-    	HashMap<String, Object> contentVO = new HashMap<String, Object>();
-    	contentVO.put("jsonData", jsonData);
+    	String MethodNameS = "jsonDataInsert";    	
+    	/*
+        for (Entry<String, Object> entrySet : contentVO.entrySet()) {
+            log.debug(String.format("[%-20s][%s]", entrySet.getKey(), entrySet.getValue()));
+            
+        }
+        */
+        contentVO.forEach((key, value) -> log.debug(String.format("[%-20s][%s]", key, value)));
+        
+        log.debug("=========================================================================");
+        
     	i = this.mybatisModelImpl.addData(contentVO, DAONameS, MethodNameS);
     	
     	return i;
