@@ -3,9 +3,13 @@ package com.koreanair.common.quartz;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.quartz.JobListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
  
 public class MyJobListener implements JobListener{
- 
+	private final static Logger log = LoggerFactory.getLogger(MyJobListener.class);
+	
     @Override
     public String getName() {
         return MyJobListener.class.getName();
@@ -17,7 +21,7 @@ public class MyJobListener implements JobListener{
      */
     @Override
     public void jobToBeExecuted(JobExecutionContext context) {
-        System.out.println(String.format("[%-18s][%s] 작업시작", "jobToBeExecuted", context.getJobDetail().getKey().toString()));
+        log.debug(String.format("[%-18s][%s] 작업시작", "jobToBeExecuted", context.getJobDetail().getKey().toString()));
     }
  
     /**
@@ -26,7 +30,7 @@ public class MyJobListener implements JobListener{
      */
     @Override
     public void jobExecutionVetoed(JobExecutionContext context) {
-        System.out.println(String.format("[%-18s][%s] 작업중단", "jobExecutionVetoed", context.getJobDetail().getKey().toString()));
+    	log.debug(String.format("[%-18s][%s] 작업중단", "jobExecutionVetoed", context.getJobDetail().getKey().toString()));
     }
  
     /**
@@ -34,7 +38,7 @@ public class MyJobListener implements JobListener{
      */
     @Override
     public void jobWasExecuted(JobExecutionContext context, JobExecutionException jobException) {
-        System.out.println(String.format("[%-18s][%s] 작업완료", "jobWasExecuted", context.getJobDetail().getKey().toString()));
+    	log.debug(String.format("[%-18s][%s] 작업완료", "jobWasExecuted", context.getJobDetail().getKey().toString()));
     }
 }
  

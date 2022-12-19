@@ -23,9 +23,6 @@ public class DBConnectionService {
 	
 	
 	public static void main(String[] args) {
-		DBConnectionPoolManager.dbServer = "jdbc:postgresql://localhost:5432/postgres";
-		DBConnectionPoolManager.user = "postgres";
-		DBConnectionPoolManager.pw = "vmffjtm2022!";
 		
 		try {
 			Connection conn = getConnection();

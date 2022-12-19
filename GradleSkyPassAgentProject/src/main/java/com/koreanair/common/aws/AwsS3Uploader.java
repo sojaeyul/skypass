@@ -10,6 +10,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.UUID;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
@@ -18,7 +21,7 @@ import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectInputStream;
 
 public class AwsS3Uploader {
-
+	private final static Logger log = LoggerFactory.getLogger(AwsS3Uploader.class);
     private final AmazonS3Client amazonS3Client;
     public String bucket = "bucket";
     
@@ -112,7 +115,7 @@ public class AwsS3Uploader {
     
     //S3에 파일삭제
     public void delete(String fileName) {
-    	System.out.println("File Delete : " + fileName);
+    	log.debug("File Delete : " + fileName);
         amazonS3Client.deleteObject(bucket, fileName);
     }
     

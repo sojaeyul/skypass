@@ -5,13 +5,14 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.Properties;
 
-import org.apache.commons.configuration.Configuration;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class MyBatisConnectionFactory {
- 
+	private final static Logger log = LoggerFactory.getLogger(MyBatisConnectionFactory.class); 
     private static SqlSessionFactory sqlSessionFactory;
  
     static {
@@ -25,6 +26,7 @@ public class MyBatisConnectionFactory {
  
             if (sqlSessionFactory == null) {
             	String skypassInstance = System.getProperty("skypass.instance");
+            	log.debug(String.format("instance name ==> [%s]", skypassInstance));
             	
                 Properties properties = new Properties();
                 properties.load(envReader);

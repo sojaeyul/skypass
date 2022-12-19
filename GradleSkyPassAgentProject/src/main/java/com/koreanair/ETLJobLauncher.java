@@ -50,7 +50,7 @@ public class ETLJobLauncher {
     // Scheduler 종료 함수
     public static void stop() throws SchedulerException {
         try {
-            System.out.println("스케줄러가 종료됩니다...");
+        	log.debug("스케줄러가 종료됩니다...");
             
             // Job Key 목록
             Set<JobKey> allJobKeys = scheduler.getJobKeys(GroupMatcher.anyGroup());
@@ -69,7 +69,7 @@ public class ETLJobLauncher {
             //   - false: 즉시 종료
             scheduler.shutdown(true);
  
-            System.out.println("스케줄러가 종료되었습니다.");
+            log.debug("스케줄러가 종료되었습니다.");
         } catch (SchedulerException e) {
             e.printStackTrace();
         }
@@ -77,13 +77,7 @@ public class ETLJobLauncher {
     
     
 	public static void main(String[] args) throws Exception  {
-
-        log.trace("trace!!!!!");
-        log.debug("debug!!!!"); 
-        log.info("info!!!!!");
-        log.warn("warn!!!!!");
-        log.error("error!!!!");
-        
+		//trace>debug>info>warn>error
         // Scheduler 실행
         start();	        
 
