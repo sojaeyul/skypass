@@ -14,7 +14,7 @@
 		SELECT 
 		    *
 		FROM SP_PARSING_MASTER_LOG
-		OFFSET 0 ROWS FETCH NEXT 5000000 ROWS ONLY	
+		OFFSET 0 ROWS FETCH NEXT 500000 ROWS ONLY	
 	</select>
     <insert id="jsonDataInsert" parameterType="java.util.HashMap">
         INSERT INTO SP_PARSING_MASTER_LOG (

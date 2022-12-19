@@ -41,61 +41,66 @@ public class CreateJsonParsingDataService {
         JsonFactory jsonFactory = new MappingJsonFactory();  
         File jsonFile = new File(jsonFilePath);
         JsonParser jsonParser = jsonFactory.createParser(jsonFile); // json 파서 생성  
-        while (jsonParser.nextToken() != JsonToken.END_OBJECT) {
-        	String fieldName = jsonParser.getCurrentName(); // 필드명, 필드값 토큰인 경우 필드명, 나머지 토큰은 null 리턴      
-        	//log.debug("fieldName :: " + fieldName );        	
-        	if ("id".equals(StringUtil.NVL(fieldName)) 
-        			|| "batchInstanceId".equals(StringUtil.NVL(fieldName))
-        			|| "seqNumber".equals(StringUtil.NVL(fieldName))
-        			|| "loyaltySystem".equals(StringUtil.NVL(fieldName))
-        			|| "partner".equals(StringUtil.NVL(fieldName))
-        			|| "service".equals(StringUtil.NVL(fieldName))
-        			|| "additionalData".equals(StringUtil.NVL(fieldName))
-        			|| "recordsCount".equals(StringUtil.NVL(fieldName))        			
-        			|| "statistics".equals(StringUtil.NVL(fieldName))
-        			|| "businessStatistics".equals(StringUtil.NVL(fieldName))
-        		) {  
-        		jsonParser.nextToken();  
-        		jsonParser.readValueAsTree();
-        		//log.debug("fieldName :: " + fieldName + " :: " +jsonParser.readValueAsTree());        	
-        	}else if ("records".equals(StringUtil.NVL(fieldName))) {
-        		while (jsonParser.nextToken() != JsonToken.END_ARRAY) {
-        			while (jsonParser.nextToken() != JsonToken.END_OBJECT) {
-        				String recordsSubfieldName = jsonParser.getCurrentName();  
-                		if ("index".equals(StringUtil.NVL(recordsSubfieldName)) 
-                    			|| "identifier".equals(StringUtil.NVL(recordsSubfieldName))
-                    			|| "status".equals(StringUtil.NVL(recordsSubfieldName))
-                    		) {  
-                			jsonParser.nextToken();  
-                    		jsonParser.readValueAsTree();       	
-                    	}else if ("response".equals(StringUtil.NVL(recordsSubfieldName))) {
-                    		HashMap<String, Object> mdeMetaVO = new HashMap<String, Object>();
-                    		while (jsonParser.nextToken() != JsonToken.END_OBJECT) {
-                    			String responseSubfieldName = jsonParser.getCurrentName(); 
-                    			if("MDEMeta".equals(StringUtil.NVL(responseSubfieldName)))  {
-                					jsonParser.nextToken();  
-                					String mdeMetaJsonData = jsonParser.readValueAsTree().toString();
-                					
-                					//1. parsing start
-                					JSONParser mdeMetaJsonParser = new JSONParser();
-                					JSONObject mdeMetaJsonObj = (JSONObject)mdeMetaJsonParser.parse(mdeMetaJsonData);
-                					JSONObject data = (JSONObject)mdeMetaJsonObj.get("created");
-                					mdeMetaVO.put("createAt", (String)data.get("at"));
-                					//parsing end
-                					
-                    			}else if("serviceMDEEntries".equals(StringUtil.NVL(responseSubfieldName)))  {
-                    				while (jsonParser.nextToken() != JsonToken.END_ARRAY) {
-                    					//1. USE JSON DATA
-                    					createParsingData(jsonParser, mdeMetaVO);
-                    				}//JsonToken.END_ARRAY
-                    				//createParsingData(jsonParser);
-                    			}//if
-                    		}//JsonToken.END_OBJECT
-                    	}//if response
-        			}//end Array
-        		}//end Object
-        	}//if
-        }//while
+        try {
+
+	        while (jsonParser.nextToken() != JsonToken.END_OBJECT) {
+	        	String fieldName = jsonParser.getCurrentName(); // 필드명, 필드값 토큰인 경우 필드명, 나머지 토큰은 null 리턴      
+	        	//log.debug("fieldName :: " + fieldName );        	
+	        	if ("id".equals(StringUtil.NVL(fieldName)) 
+	        			|| "batchInstanceId".equals(StringUtil.NVL(fieldName))
+	        			|| "seqNumber".equals(StringUtil.NVL(fieldName))
+	        			|| "loyaltySystem".equals(StringUtil.NVL(fieldName))
+	        			|| "partner".equals(StringUtil.NVL(fieldName))
+	        			|| "service".equals(StringUtil.NVL(fieldName))
+	        			|| "additionalData".equals(StringUtil.NVL(fieldName))
+	        			|| "recordsCount".equals(StringUtil.NVL(fieldName))        			
+	        			|| "statistics".equals(StringUtil.NVL(fieldName))
+	        			|| "businessStatistics".equals(StringUtil.NVL(fieldName))
+	        		) {  
+	        		jsonParser.nextToken();  
+	        		jsonParser.readValueAsTree();
+	        		//log.debug("fieldName :: " + fieldName + " :: " +jsonParser.readValueAsTree());        	
+	        	}else if ("records".equals(StringUtil.NVL(fieldName))) {
+	        		while (jsonParser.nextToken() != JsonToken.END_ARRAY) {
+	        			while (jsonParser.nextToken() != JsonToken.END_OBJECT) {
+	        				String recordsSubfieldName = jsonParser.getCurrentName();  
+	                		if ("index".equals(StringUtil.NVL(recordsSubfieldName)) 
+	                    			|| "identifier".equals(StringUtil.NVL(recordsSubfieldName))
+	                    			|| "status".equals(StringUtil.NVL(recordsSubfieldName))
+	                    		) {  
+	                			jsonParser.nextToken();  
+	                    		jsonParser.readValueAsTree();       	
+	                    	}else if ("response".equals(StringUtil.NVL(recordsSubfieldName))) {
+	                    		HashMap<String, Object> mdeMetaVO = new HashMap<String, Object>();
+	                    		while (jsonParser.nextToken() != JsonToken.END_OBJECT) {
+	                    			String responseSubfieldName = jsonParser.getCurrentName(); 
+	                    			if("MDEMeta".equals(StringUtil.NVL(responseSubfieldName)))  {
+	                					jsonParser.nextToken();  
+	                					String mdeMetaJsonData = jsonParser.readValueAsTree().toString();
+	                					
+	                					//1. parsing start
+	                					JSONParser mdeMetaJsonParser = new JSONParser();
+	                					JSONObject mdeMetaJsonObj = (JSONObject)mdeMetaJsonParser.parse(mdeMetaJsonData);
+	                					JSONObject data = (JSONObject)mdeMetaJsonObj.get("created");
+	                					mdeMetaVO.put("createAt", (String)data.get("at"));
+	                					//parsing end
+	                					
+	                    			}else if("serviceMDEEntries".equals(StringUtil.NVL(responseSubfieldName)))  {
+	                    				while (jsonParser.nextToken() != JsonToken.END_ARRAY) {
+	                    					//1. USE JSON DATA
+	                    					createParsingData(jsonParser, mdeMetaVO);
+	                    				}//JsonToken.END_ARRAY
+	                    				//createParsingData(jsonParser);
+	                    			}//if
+	                    		}//JsonToken.END_OBJECT
+	                    	}//if response
+	        			}//end Array
+	        		}//end Object
+	        	}//if
+	        }//while
+		}finally {
+			jsonParser.close(); 
+		}
 	}
 	
 	public void createParsingData(JsonParser jsonParser, HashMap<String, Object> mdeMetaVO) throws Exception {
@@ -138,6 +143,9 @@ public class CreateJsonParsingDataService {
 		spParsingMasterDAO.jsonSave(contentVO);
 	}
 	
+	public void tableTruncate() throws Exception {
+		spParsingMasterDAO.tableTruncate();
+	}
 	
 	public void createParsingDataSmaple() throws Exception {
         JsonFactory jsonFactory = new MappingJsonFactory();  

@@ -31,49 +31,42 @@ public class SpParsingMasterLogDAO {
 
     }
 
-	public int jsonSave(String jsonData) throws Exception {
+	public int jsonSave(HashMap<String, Object> contentVO) throws Exception {
 		int i = 0;
 		String DAONameS = "SP_PARSING_MASTER_LOG";
-    	String MethodNameS = "jsonDataInsert";
-    	
-    	HashMap<String, Object> contentVO = new HashMap<String, Object>();
-    	contentVO.put("jsonData", jsonData);
+    	String MethodNameS = "jsonDataInsert";    	
+
     	i = this.mybatisModelImpl.addData(contentVO, DAONameS, MethodNameS);
     	
     	return i;
 	}
 	
-	public int jsonDelete(int seq) throws Exception {
+	public int jsonDelete(HashMap<String, Object> contentVO) throws Exception {
 		int i = 0;
 		String DAONameS = "SP_PARSING_MASTER_LOG";
     	String MethodNameS = "jsonDataDelete";
     	
-    	HashMap<String, Object> contentVO = new HashMap<String, Object>();
-    	contentVO.put("seq", seq);
     	i = this.mybatisModelImpl.deleteData(contentVO, DAONameS, MethodNameS);
     	
     	return i;
 	}
 	
-	public int jsonSave(SqlSession sqlSession, String jsonData) throws Exception {
+	public int jsonSave(SqlSession sqlSession, HashMap<String, Object> contentVO) throws Exception {
 		int i = 0;
 		String DAONameS = "SP_PARSING_MASTER_LOG";
     	String MethodNameS = "jsonDataInsert";
     	
-    	HashMap<String, Object> contentVO = new HashMap<String, Object>();
-    	contentVO.put("jsonData", jsonData);
     	i = this.mybatisModelImpl.addData(sqlSession, contentVO, DAONameS, MethodNameS);
     	
     	return i;
 	}
 	
-	public int jsonDelete(SqlSession sqlSession, int seq) throws Exception {
+	public int jsonDelete(SqlSession sqlSession, HashMap<String, Object> contentVO) throws Exception {
 		int i = 0;
 		String DAONameS = "SP_PARSING_MASTER_LOG";
     	String MethodNameS = "jsonDataDelete";
     	
-    	HashMap<String, Object> contentVO = new HashMap<String, Object>();
-    	contentVO.put("seq", seq);
+  
     	i = this.mybatisModelImpl.deleteData(sqlSession, contentVO, DAONameS, MethodNameS);
     	
     	return i;

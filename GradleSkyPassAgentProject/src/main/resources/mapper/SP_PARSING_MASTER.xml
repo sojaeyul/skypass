@@ -41,5 +41,8 @@
     </update>    
     <delete id="jsonDataDelete" parameterType="java.util.HashMap">
     	DELETE FROM SP_PARSING_MASTER WHERE seq = #{seq}
-    </delete>     
+    </delete>   
+    <delete id="tableTruncate" parameterType="java.util.HashMap">
+    	truncate SP_PARSING_MASTER
+    </delete>
 </mapper>    

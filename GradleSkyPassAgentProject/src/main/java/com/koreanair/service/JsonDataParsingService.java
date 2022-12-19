@@ -23,8 +23,7 @@ public class JsonDataParsingService {
 	public void parsingData(HashMap<String, Object> jsonMap) {
 		SqlSession sqlSession = sqlSessionFactory.openSession();
 		
-		String jsonString =  (String)jsonMap.get("jsondata");
-		int seq = (Integer)jsonMap.get("seq"); 			
+		String jsonString =  (String)jsonMap.get("jsondata"); 			
 		try {
 			jsonString = jsonString.substring(1,jsonString.length()-1);
 			
@@ -42,15 +41,14 @@ public class JsonDataParsingService {
 						
 			//2. log insert
 			SpParsingMasterLogDAO logDAO = new SpParsingMasterLogDAO();
-			//logDAO.jsonSave(sqlSession, jsonString);
-			logDAO.jsonDelete(sqlSession, seq); 
+			logDAO.jsonSave(sqlSession, jsonMap);
+			//logDAO.jsonDelete(sqlSession, seq); 
 			
 			//1. master delete
 			SpParsingMasterDAO masterDAO = new SpParsingMasterDAO();
-			//masterDAO.jsonDelete(sqlSession, seq);
-			masterDAO.jsonSave(sqlSession, jsonString);
+			masterDAO.jsonDelete(sqlSession, jsonMap);
+			//masterDAO.jsonSave(sqlSession, jsonString);
 
-			
 		}catch(Exception ex) {
 			ex.printStackTrace();
 		} finally {

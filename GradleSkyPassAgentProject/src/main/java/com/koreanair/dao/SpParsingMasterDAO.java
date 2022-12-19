@@ -55,42 +55,47 @@ public class SpParsingMasterDAO {
     	return i;
 	}
 	
-	public int jsonDelete(int seq) throws Exception {
+	public int jsonDelete(HashMap<String, Object> contentVO) throws Exception {
 		int i = 0;
 		String DAONameS = "SP_PARSING_MASTER";
     	String MethodNameS = "jsonDataDelete";
     	
-    	HashMap<String, Object> contentVO = new HashMap<String, Object>();
-    	contentVO.put("seq", seq);
     	i = this.mybatisModelImpl.deleteData(contentVO, DAONameS, MethodNameS);
     	
     	return i;
 	}
 	
-	public int jsonSave(SqlSession sqlSession, String jsonData) throws Exception {
+	public int tableTruncate() throws Exception {
+		int i = 0;
+		String DAONameS = "SP_PARSING_MASTER";
+    	String MethodNameS = "tableTruncate";
+    	
+    	i = this.mybatisModelImpl.deleteData(new HashMap<String, Object>(), DAONameS, MethodNameS);
+    	
+    	return i;
+	}
+	
+	public int jsonSave(SqlSession sqlSession, HashMap<String, Object> contentVO) throws Exception {
 		int i = 0;
 		String DAONameS = "SP_PARSING_MASTER";
     	String MethodNameS = "jsonDataInsert";
     	
-    	HashMap<String, Object> contentVO = new HashMap<String, Object>();
-    	contentVO.put("jsonData", jsonData);
     	i = this.mybatisModelImpl.addData(sqlSession, contentVO, DAONameS, MethodNameS);
     	
     	return i;
 	}
 	
-	public int jsonDelete(SqlSession sqlSession, int seq) throws Exception {
+	public int jsonDelete(SqlSession sqlSession, HashMap<String, Object> contentVO) throws Exception {
 		int i = 0;
 		String DAONameS = "SP_PARSING_MASTER";
     	String MethodNameS = "jsonDataDelete";
     	
-    	HashMap<String, Object> contentVO = new HashMap<String, Object>();
-    	contentVO.put("seq", seq);
     	i = this.mybatisModelImpl.deleteData(sqlSession, contentVO, DAONameS, MethodNameS);
     	
     	return i;
 	}
 	
+
 	
 	public static void main(String[] args) throws Exception {
 		SpParsingMasterDAO dao = new SpParsingMasterDAO();

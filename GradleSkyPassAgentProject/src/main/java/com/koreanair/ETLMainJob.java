@@ -47,6 +47,9 @@ public class ETLMainJob implements InterruptableJob {
 	        
 	        //2. Thread
 	        bizThreadCall();
+	        
+	        //3. truncate
+	        service.tableTruncate();
 	        ///////////////////////////////////////////////////////////////////////////	        
 	        
 	        Calendar endDate = Calendar.getInstance();
@@ -75,11 +78,11 @@ public class ETLMainJob implements InterruptableJob {
 		int threadCount = 1000;
 		ExecutorService executorService = Executors.newFixedThreadPool(threadCount);
 		try{
-			//SpParsingMasterDAO spParsingMasterDAO = new SpParsingMasterDAO();	   
-			SpParsingMasterLogDAO spParsingMasterDAO = new SpParsingMasterLogDAO();
+			SpParsingMasterDAO spParsingMasterDAO = new SpParsingMasterDAO();	   
+			//SpParsingMasterLogDAO spParsingMasterDAO = new SpParsingMasterLogDAO();
 			
 			int totalInsertCnt = 0;
-//			while(true) {
+			while(true) {
 		        List<HashMap<String, Object>> alist= spParsingMasterDAO.jsonContentList(new HashMap<String, Object>());
 		        if(alist!=null && alist.size()>0) {
 					for(int i = 0; i < alist.size(); i++ ){				
@@ -98,9 +101,9 @@ public class ETLMainJob implements InterruptableJob {
 					}
 					totalInsertCnt = totalInsertCnt + alist.size();
 					System.out.println(String.format("[%-18s][☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆ %d]", "Thread End", totalInsertCnt));
-//		        }else {
-//		        	break;
-//		        }
+		        }else {
+		        	break;
+		        }
 			}
 		}catch(Exception ex){
 			executorService.shutdownNow();
