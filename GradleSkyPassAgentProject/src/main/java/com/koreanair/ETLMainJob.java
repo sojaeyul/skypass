@@ -45,7 +45,7 @@ public class ETLMainJob implements InterruptableJob {
 	        String message = map.getString("message");
 	        String jobName = context.getJobDetail().getKey().getName();
 	        
-	        System.out.println(String.format("[%-18s][%s][%s][%s] ETLMainJob Running...", this.getClass().getName(), jobName, message,startCurrentDate));
+	        log.debug(String.format("[%-18s][%s][%s][%s] ETLMainJob Running...", this.getClass().getName(), jobName, message,startCurrentDate));
 	        
 	        ///////////////////////////////////////////////////////////////////////////
 	        CreateJsonParsingDataService service = new CreateJsonParsingDataService();
@@ -60,7 +60,7 @@ public class ETLMainJob implements InterruptableJob {
 	        }
 	        
 	        //2. Thread
-	        //bizThreadCall();
+	        bizThreadCall();
 	        
 	        //3. truncate
 	        service.tableTruncate(true);
@@ -68,8 +68,8 @@ public class ETLMainJob implements InterruptableJob {
 	        
 	        Calendar endDate = Calendar.getInstance();
 	        String endCurrentDate = TIMESTAMP_FMT.format(endDate.getTime());
-	        System.out.println(String.format("[%-18s][%s][%s][%s] ETLMainJob Finish!!!", this.getClass().getName(), jobName, message,endCurrentDate));	        
-	        System.out.println(DateUtil.dateDiff(startDate, endDate));
+	        log.debug(String.format("[%-18s][%s][%s][%s] ETLMainJob Finish!!!", this.getClass().getName(), jobName, message,endCurrentDate));	        
+	        log.debug(DateUtil.dateDiff(startDate, endDate));
 	        
     	}catch(Exception ex) {
     		log.error("☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆ETLMainJob ERROR☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆", ex);
