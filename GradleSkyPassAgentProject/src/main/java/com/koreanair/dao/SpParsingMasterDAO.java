@@ -20,7 +20,7 @@ public class SpParsingMasterDAO {
     }
     
     public HashMap<String, Object> docAuthorSelect(HashMap<String, Object> argInfoVO) throws Exception{
-    	String DAOName = "SP_PARSING_MASTER";
+    	String DAOName = "SKYPASS.SP_PARSING_MASTER";
     	String MethodName = "jsonDataSelect";
     	HashMap<String, Object> view = this.mybatisModelImpl.getData(argInfoVO, DAOName, MethodName);
     	
@@ -29,7 +29,7 @@ public class SpParsingMasterDAO {
     }
     
     public Long jsonDataSelectListCnt(HashMap<String, Object> argInfoVO) throws Exception {
-    	String DAOName = "SP_PARSING_MASTER";
+    	String DAOName = "SKYPASS.SP_PARSING_MASTER";
     	String MethodName = "jsonDataSelectListCnt";
     	HashMap<String, Object> view = this.mybatisModelImpl.getData(argInfoVO, DAOName, MethodName);
         return (Long)view.get("cnt");
@@ -37,7 +37,7 @@ public class SpParsingMasterDAO {
     }
 	
     public List<HashMap<String, Object>> jsonContentList(HashMap<String, Object> argInfoVO) throws Exception {
-    	String DAOName = "SP_PARSING_MASTER";
+    	String DAOName = "SKYPASS.SP_PARSING_MASTER";
     	String MethodName = "jsonDataSelectList";
     	List<HashMap<String, Object>> alist = this.mybatisModelImpl.getDataList(argInfoVO, DAOName, MethodName);
         return alist;
@@ -46,7 +46,7 @@ public class SpParsingMasterDAO {
     
 	public int jsonSave(HashMap<String, Object> contentVO) throws Exception {
 		int i = 0;
-		String DAONameS = "SP_PARSING_MASTER";
+		String DAONameS = "SKYPASS.SP_PARSING_MASTER";
     	String MethodNameS = "jsonDataInsert";    	
     	/*
         for (Entry<String, Object> entrySet : contentVO.entrySet()) {
@@ -54,10 +54,10 @@ public class SpParsingMasterDAO {
             
         }
         */
-        contentVO.forEach((key, value) -> log.debug(String.format("[%-20s][%s]", key, value)));
-        
+    	/*
+        contentVO.forEach((key, value) -> log.debug(String.format("[%-20s][%s]", key, value)));        
         log.debug("=========================================================================");
-        
+        */
     	i = this.mybatisModelImpl.addData(contentVO, DAONameS, MethodNameS);
     	
     	return i;
@@ -65,7 +65,7 @@ public class SpParsingMasterDAO {
 	
 	public int jsonDelete(HashMap<String, Object> contentVO) throws Exception {
 		int i = 0;
-		String DAONameS = "SP_PARSING_MASTER";
+		String DAONameS = "SKYPASS.SP_PARSING_MASTER";
     	String MethodNameS = "jsonDataDelete";
     	
     	i = this.mybatisModelImpl.deleteData(contentVO, DAONameS, MethodNameS);
@@ -75,7 +75,7 @@ public class SpParsingMasterDAO {
 	
 	public int tableTruncate() throws Exception {
 		int i = 0;
-		String DAONameS = "SP_PARSING_MASTER";
+		String DAONameS = "SKYPASS.SP_PARSING_MASTER";
     	String MethodNameS = "tableTruncate";
     	
     	i = this.mybatisModelImpl.deleteData(new HashMap<String, Object>(), DAONameS, MethodNameS);
@@ -85,7 +85,7 @@ public class SpParsingMasterDAO {
 	
 	public int jsonSave(SqlSession sqlSession, HashMap<String, Object> contentVO) throws Exception {
 		int i = 0;
-		String DAONameS = "SP_PARSING_MASTER";
+		String DAONameS = "SKYPASS.SP_PARSING_MASTER";
     	String MethodNameS = "jsonDataInsert";
     	
     	i = this.mybatisModelImpl.addData(sqlSession, contentVO, DAONameS, MethodNameS);
@@ -95,7 +95,7 @@ public class SpParsingMasterDAO {
 	
 	public int jsonDelete(SqlSession sqlSession, HashMap<String, Object> contentVO) throws Exception {
 		int i = 0;
-		String DAONameS = "SP_PARSING_MASTER";
+		String DAONameS = "SKYPASS.SP_PARSING_MASTER";
     	String MethodNameS = "jsonDataDelete";
     	
     	i = this.mybatisModelImpl.deleteData(sqlSession, contentVO, DAONameS, MethodNameS);

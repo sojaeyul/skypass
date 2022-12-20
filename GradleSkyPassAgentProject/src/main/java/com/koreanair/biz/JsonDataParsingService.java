@@ -19,7 +19,7 @@ public class JsonDataParsingService {
 	public void parsingData(HashMap<String, Object> jsonMap) throws Exception {
 		String jsonString =  (String)jsonMap.get("jsondata"); 			
 
-		log.debug("jsonString :: " + jsonString);
+		//log.debug("jsonString :: " + jsonString);
 		
 		//1. parsing start
 		/*

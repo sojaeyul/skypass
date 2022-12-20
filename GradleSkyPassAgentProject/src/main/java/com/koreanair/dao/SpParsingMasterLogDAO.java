@@ -15,7 +15,7 @@ public class SpParsingMasterLogDAO {
     }
     
     public HashMap<String, Object> docAuthorSelect(HashMap<String, Object> argInfoVO) throws Exception{
-    	String DAOName = "SP_PARSING_MASTER_LOG";
+    	String DAOName = "SKYPASS.SP_PARSING_MASTER_LOG";
     	String MethodName = "jsonDataSelect";
     	HashMap<String, Object> view = this.mybatisModelImpl.getData(argInfoVO, DAOName, MethodName);
     	
@@ -24,7 +24,7 @@ public class SpParsingMasterLogDAO {
     }
 	
     public List<HashMap<String, Object>> jsonContentList(HashMap<String, Object> argInfoVO) throws Exception {
-    	String DAOName = "SP_PARSING_MASTER_LOG";
+    	String DAOName = "SKYPASS.SP_PARSING_MASTER_LOG";
     	String MethodName = "jsonDataSelectList";
     	List<HashMap<String, Object>> alist = this.mybatisModelImpl.getDataList(argInfoVO, DAOName, MethodName);
         return alist;
@@ -33,7 +33,7 @@ public class SpParsingMasterLogDAO {
 
 	public int jsonSave(HashMap<String, Object> contentVO) throws Exception {
 		int i = 0;
-		String DAONameS = "SP_PARSING_MASTER_LOG";
+		String DAONameS = "SKYPASS.SP_PARSING_MASTER_LOG";
     	String MethodNameS = "jsonDataInsert";    	
 
     	i = this.mybatisModelImpl.addData(contentVO, DAONameS, MethodNameS);
@@ -43,7 +43,7 @@ public class SpParsingMasterLogDAO {
 	
 	public int jsonDelete(HashMap<String, Object> contentVO) throws Exception {
 		int i = 0;
-		String DAONameS = "SP_PARSING_MASTER_LOG";
+		String DAONameS = "SKYPASS.SP_PARSING_MASTER_LOG";
     	String MethodNameS = "jsonDataDelete";
     	
     	i = this.mybatisModelImpl.deleteData(contentVO, DAONameS, MethodNameS);
@@ -53,7 +53,7 @@ public class SpParsingMasterLogDAO {
 	
 	public int jsonSave(SqlSession sqlSession, HashMap<String, Object> contentVO) throws Exception {
 		int i = 0;
-		String DAONameS = "SP_PARSING_MASTER_LOG";
+		String DAONameS = "SKYPASS.SP_PARSING_MASTER_LOG";
     	String MethodNameS = "jsonDataInsert";
     	
     	i = this.mybatisModelImpl.addData(sqlSession, contentVO, DAONameS, MethodNameS);
@@ -63,7 +63,7 @@ public class SpParsingMasterLogDAO {
 	
 	public int jsonDelete(SqlSession sqlSession, HashMap<String, Object> contentVO) throws Exception {
 		int i = 0;
-		String DAONameS = "SP_PARSING_MASTER_LOG";
+		String DAONameS = "SKYPASS.SP_PARSING_MASTER_LOG";
     	String MethodNameS = "jsonDataDelete";
     	
   

@@ -22,6 +22,7 @@
  	<logger name="org.quartz" level="warn"/>
  	<logger name="org.apache.ibatis" level="error"/> 	
     <logger name="com.koreanair" level="debug"/>
+    <logger name="SKYPASS" level="error"/><!-- IBATIS 쿼리 로그 -->
 
     <root level="debug">
         <appender-ref ref="CONSOLE"/> <!-- Console에 로그를 출력하고자 할 때 사용 -->
