@@ -31,6 +31,7 @@ public class ETLMainJob implements InterruptableJob {
     
     @Override
     public void execute(JobExecutionContext context) {
+    	
     	try {
 	        // 현재 Thread 저장
 	        this.jboCurrentThread = Thread.currentThread();
@@ -44,16 +45,22 @@ public class ETLMainJob implements InterruptableJob {
 	        System.out.println(String.format("[%-18s][%s][%s][%s] ETLMainJob Running...", this.getClass().getName(), jobName, message,startCurrentDate));
 	        
 	        ///////////////////////////////////////////////////////////////////////////
-	        //1. 파싱데이터 생성
 	        CreateJsonParsingDataService service = new CreateJsonParsingDataService();
-	        service.createMoveParsingData();
-	        //service.createParsingDataSmaple();
+	        //1. 파싱데이터 생성
+	        try {
+	        	service.createMoveParsingData();
+	        	//service.createParsingDataSmaple();
+	        }catch(Exception ex) {
+	    		log.error("☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆CreateJSONParsing ERROR☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆", ex);
+	    		service.tableTruncate(false);
+	    		throw ex;
+	        }
 	        
 	        //2. Thread
-	        //bizThreadCall();
+	        bizThreadCall();
 	        
 	        //3. truncate
-	        service.tableTruncate();
+	        service.tableTruncate(true);
 	        ///////////////////////////////////////////////////////////////////////////	        
 	        
 	        Calendar endDate = Calendar.getInstance();
@@ -85,7 +92,7 @@ public class ETLMainJob implements InterruptableJob {
 			//SpParsingMasterLogDAO spParsingMasterDAO = new SpParsingMasterLogDAO();
 			
 			int totalInsertCnt = 0;
-//			while(true) {
+			while(true) {
 		        List<HashMap<String, Object>> alist= spParsingMasterDAO.jsonContentList(new HashMap<String, Object>());
 		        if(alist!=null && alist.size()>0) {
 					for(int i = 0; i < alist.size(); i++ ){				
@@ -103,10 +110,10 @@ public class ETLMainJob implements InterruptableJob {
 						}
 					}
 					totalInsertCnt = totalInsertCnt + alist.size();
-					System.out.println(String.format("[%-18s][☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆ %d]", "Thread End", totalInsertCnt));
-//		        }else {
-//		        	break;
-//		        }
+					log.debug(String.format("[%-18s][☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆ %d]", "Thread End", totalInsertCnt));
+		        }else {
+		        	break;
+		        }
 			}
 		}catch(Exception ex){
 			log.error("☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆ETLMainJob Thread Call ERROR☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆", ex);

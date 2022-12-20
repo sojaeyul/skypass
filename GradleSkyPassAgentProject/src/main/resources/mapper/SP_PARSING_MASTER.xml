@@ -5,49 +5,65 @@
     
 <mapper namespace="SP_PARSING_MASTER">
 	<select id="jsonDataSelect" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-		SELECT 
-		    *
-		FROM SP_PARSING_MASTER
-		WHERE seq = #{seq}
+		select 
+		     seq
+		    ,membershipid
+		    ,membershipresourceid
+		    ,resource
+		    ,operation
+		    ,action
+		    ,createdat
+		    ,jsondata
+		    ,creaedate
+		from sp_parsing_master
+		where seq = #{seq}
 	</select>
 	<select id="jsonDataSelectListCnt" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-		SELECT 
-		    COALESCE(COUNT(*),0) AS CNT
-		FROM SP_PARSING_MASTER
+		select 
+		    coalesce(count(*),0) as cnt
+		from sp_parsing_master
 	</select>	
 	<select id="jsonDataSelectList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-		SELECT 
-		    *
-		FROM SP_PARSING_MASTER
-		OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY	
+		select 
+		     seq
+		    ,membershipid
+		    ,membershipresourceid
+		    ,resource
+		    ,operation
+		    ,action
+		    ,createdat
+		    ,jsondata
+		    ,creaedate
+		from sp_parsing_master
+		offset 0 rows fetch next 1 rows only	
 	</select>
     <insert id="jsonDataInsert" parameterType="java.util.HashMap">
-        INSERT INTO SP_PARSING_MASTER (
-			    membershipId
-			    ,membershipResourceId     
+        insert into sp_parsing_master (
+			    membershipid
+			    ,membershipresourceid     
 			    ,resource
 			    ,operation
 			    ,action
-			    ,createdAt
-			    ,jsonData
-			    ,creaeDate
-        ) VALUES (
-			    #{membershipId}
-			    ,#{membershipResourceId}        
+			    ,createdat
+			    ,jsondata
+			    ,creaedate
+        ) values (
+			    #{membershipid}
+			    ,#{membershipresourceid}        
 			    ,#{resource}
 			    ,#{operation}
 			    ,#{action}
-			    ,#{createdAt}
-			    ,#{jsonData }       							   	
+			    ,#{createdat}
+			    ,#{jsondata }       							   	
 			    ,now()
         )
     </insert>
     <update id="jsonDataUpdate" parameterType="java.util.HashMap">
     </update>    
     <delete id="jsonDataDelete" parameterType="java.util.HashMap">
-    	DELETE FROM SP_PARSING_MASTER WHERE seq = #{seq}
+    	delete from sp_parsing_master where seq = #{seq}
     </delete>   
     <delete id="tableTruncate" parameterType="java.util.HashMap">
-    	truncate SP_PARSING_MASTER
+    	truncate sp_parsing_master
     </delete>
 </mapper>    

@@ -5,41 +5,57 @@
     
 <mapper namespace="SP_PARSING_MASTER_LOG">
 	<select id="jsonDataSelect" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-		SELECT 
-		    *
-		FROM SP_PARSING_MASTER_LOG
-		WHERE seq = #{seq}
+		select 
+		     seq
+		    ,membershipid
+		    ,membershipresourceid
+		    ,resource
+		    ,operation
+		    ,action
+		    ,createdat
+		    ,jsondata
+		    ,creaedate
+		from sp_parsing_master_log
+		where seq = #{seq}
 	</select>
 	<select id="jsonDataSelectList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-		SELECT 
-		    *
-		FROM SP_PARSING_MASTER_LOG
-		OFFSET 0 ROWS FETCH NEXT 500000 ROWS ONLY	
+		select 
+		     seq
+		    ,membershipid
+		    ,membershipresourceid
+		    ,resource
+		    ,operation
+		    ,action
+		    ,createdat
+		    ,jsondata
+		    ,creaedate
+		from sp_parsing_master_log
+		offset 0 rows fetch next 500000 rows only	
 	</select>
     <insert id="jsonDataInsert" parameterType="java.util.HashMap">
-        INSERT INTO SP_PARSING_MASTER_LOG (
-			    membershipId
-			    ,membershipResourceId     
+        insert into sp_parsing_master_log (
+			    membershipid
+			    ,membershipresourceid     
 			    ,resource
 			    ,operation
 			    ,action
-			    ,createdAt
-			    ,jsonData
-			    ,creaeDate
-        ) VALUES (
-			    #{membershipId}
-			    ,#{membershipResourceId}        
+			    ,createdat
+			    ,jsondata
+			    ,creaedate
+        ) values (
+			    #{membershipid}
+			    ,#{membershipresourceid}        
 			    ,#{resource}
 			    ,#{operation}
 			    ,#{action}
-			    ,#{createdAt}
-			    ,#{jsonData }       							   	
+			    ,#{createdat}
+			    ,#{jsondata }   							   	
 			    ,now()
         )
     </insert>
     <update id="jsonDataUpdate" parameterType="java.util.HashMap">
     </update>    
     <delete id="jsonDataDelete" parameterType="java.util.HashMap">
-    	DELETE FROM SP_PARSING_MASTER_LOG WHERE seq = #{seq}
+    	delete from sp_parsing_master_log where seq = #{seq}
     </delete>     
 </mapper>    

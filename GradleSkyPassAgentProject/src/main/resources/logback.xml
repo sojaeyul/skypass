@@ -20,7 +20,7 @@
 
  
  	<logger name="org.quartz" level="warn"/>
- 	<logger name="org.apache.ibatis" level="warn"/> 	
+ 	<logger name="org.apache.ibatis" level="error"/> 	
     <logger name="com.koreanair" level="debug"/>
 
     <root level="debug">

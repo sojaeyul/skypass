@@ -82,7 +82,7 @@ public class CreateJsonParsingDataService {
 	                					JSONParser mdeMetaJsonParser = new JSONParser();
 	                					JSONObject mdeMetaJsonObj = (JSONObject)mdeMetaJsonParser.parse(mdeMetaJsonData);
 	                					JSONObject data = (JSONObject)mdeMetaJsonObj.get("created");
-	                					mdeMetaVO.put("createdAt", (String)data.get("at"));
+	                					mdeMetaVO.put("createdat", (String)data.get("at"));
 	                					//parsing end
 	                					
 	                    			}else if("serviceMDEEntries".equals(StringUtil.NVL(responseSubfieldName)))  {
@@ -109,10 +109,10 @@ public class CreateJsonParsingDataService {
 			String mDEEntriesSubfieldName = jsonParser.getCurrentName(); 
 			if("membershipResourceId".equals(mDEEntriesSubfieldName)) {
 				 jsonParser.nextToken();  
-				 contentVO.put("membershipResourceId", jsonParser.getText());
+				 contentVO.put("membershipresourceid", jsonParser.getText());
 			}else if("membershipId".equals(mDEEntriesSubfieldName)) {
 				jsonParser.nextToken();  
-				contentVO.put("membershipId", jsonParser.getText());
+				contentVO.put("membershipid", jsonParser.getText());
 			}else if("exportReasons".equals(mDEEntriesSubfieldName)) {
 				while (jsonParser.nextToken() != JsonToken.END_ARRAY) {
 					while (jsonParser.nextToken() != JsonToken.END_OBJECT) {
@@ -128,13 +128,13 @@ public class CreateJsonParsingDataService {
 							contentVO.put("operation", jsonParser.getText());
 						}else if("activityId".equals(fieldName2)) {
 							jsonParser.nextToken();  
-							contentVO.put("activityId", jsonParser.getText());
+							contentVO.put("activityid", jsonParser.getText());
 						}
 					}
 				}
 			}else if("serviceMDEData".equals(mDEEntriesSubfieldName)) {
 				 jsonParser.nextToken();  
-				 contentVO.put("jsonData", jsonParser.readValueAsTree().toString());
+				 contentVO.put("jsondata", jsonParser.readValueAsTree().toString());
 			}
 		}//JsonToken.END_ARRAY
 		
@@ -143,9 +143,13 @@ public class CreateJsonParsingDataService {
 		spParsingMasterDAO.jsonSave(contentVO);
 	}
 	
-	public void tableTruncate() throws Exception {
-		int cnt = spParsingMasterDAO.jsonDataSelectListCnt(new HashMap<String, Object>());
-		if(cnt <=0) {
+	public void tableTruncate(boolean check) throws Exception {
+		if(check) {
+			Long cnt = spParsingMasterDAO.jsonDataSelectListCnt(new HashMap<String, Object>());
+			if(cnt <=0) {
+				spParsingMasterDAO.tableTruncate();
+			}
+		}else if(!check){
 			spParsingMasterDAO.tableTruncate();
 		}
 	}
