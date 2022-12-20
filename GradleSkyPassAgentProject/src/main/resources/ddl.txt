@@ -1,3 +1,7 @@
+drop table SP_PARSING_MASTER;
+drop table SP_PARSING_MASTER_LOG;
+
+
 -- 시퀀스 생성	
 CREATE SEQUENCE seq_ttt;	
 create table SP_PARSING_MASTER
@@ -8,7 +12,7 @@ create table SP_PARSING_MASTER
     ,resource VARCHAR(20) NOT NULL
     ,operation VARCHAR(10) NOT NULL
     ,action VARCHAR(50)
-    ,createdAt date  
+    ,createdAt VARCHAR(50)  
     ,jsonData VARCHAR(4000)
     ,creaeDate date NOT NULL
 );
@@ -28,7 +32,7 @@ create table SP_PARSING_MASTER_LOG
     ,resource VARCHAR(20) NOT NULL
     ,operation VARCHAR(10) NOT NULL
     ,action VARCHAR(50)
-    ,createdAt date  
+    ,createdAt VARCHAR(50)  
     ,jsonData VARCHAR(4000)
     ,process VARCHAR(10)
     ,creaeDate date NOT NULL    

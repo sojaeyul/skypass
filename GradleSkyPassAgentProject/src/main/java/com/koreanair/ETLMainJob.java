@@ -14,19 +14,23 @@ import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.quartz.UnableToInterruptJobException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import com.koreanair.biz.CreateJsonParsingDataService;
 import com.koreanair.common.util.DateUtil;
 import com.koreanair.dao.SpParsingMasterDAO;
 import com.koreanair.dao.SpParsingMasterLogDAO;
-import com.koreanair.service.CreateJsonParsingDataService;
 
 public class ETLMainJob implements InterruptableJob {
+	private final static Logger log = LoggerFactory.getLogger(ETLMainJob.class);
+	
 	private static final SimpleDateFormat TIMESTAMP_FMT = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSSS");
 	private ArrayList<Future<String>> callableFutureList = new ArrayList<Future<String>>();
     private Thread jboCurrentThread = null;
     
     @Override
-    public void execute(JobExecutionContext context) throws JobExecutionException {
+    public void execute(JobExecutionContext context) {
     	try {
 	        // 현재 Thread 저장
 	        this.jboCurrentThread = Thread.currentThread();
@@ -46,7 +50,7 @@ public class ETLMainJob implements InterruptableJob {
 	        //service.createParsingDataSmaple();
 	        
 	        //2. Thread
-	        bizThreadCall();
+	        //bizThreadCall();
 	        
 	        //3. truncate
 	        service.tableTruncate();
@@ -58,8 +62,7 @@ public class ETLMainJob implements InterruptableJob {
 	        System.out.println(DateUtil.dateDiff(startDate, endDate));
 	        
     	}catch(Exception ex) {
-    		ex.printStackTrace();
-    		throw new JobExecutionException();
+    		log.error("☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆ETLMainJob ERROR☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆", ex);
     	}
     }
  
@@ -82,7 +85,7 @@ public class ETLMainJob implements InterruptableJob {
 			//SpParsingMasterLogDAO spParsingMasterDAO = new SpParsingMasterLogDAO();
 			
 			int totalInsertCnt = 0;
-			while(true) {
+//			while(true) {
 		        List<HashMap<String, Object>> alist= spParsingMasterDAO.jsonContentList(new HashMap<String, Object>());
 		        if(alist!=null && alist.size()>0) {
 					for(int i = 0; i < alist.size(); i++ ){				
@@ -101,11 +104,12 @@ public class ETLMainJob implements InterruptableJob {
 					}
 					totalInsertCnt = totalInsertCnt + alist.size();
 					System.out.println(String.format("[%-18s][☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆ %d]", "Thread End", totalInsertCnt));
-		        }else {
-		        	break;
-		        }
+//		        }else {
+//		        	break;
+//		        }
 			}
 		}catch(Exception ex){
+			log.error("☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆ETLMainJob Thread Call ERROR☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆", ex);
 			executorService.shutdownNow();
 			throw ex;
 		}finally{

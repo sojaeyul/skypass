@@ -27,6 +27,14 @@ public class SpParsingMasterDAO {
         return view;
 
     }
+    
+    public int jsonDataSelectListCnt(HashMap<String, Object> argInfoVO) throws Exception {
+    	String DAOName = "SP_PARSING_MASTER";
+    	String MethodName = "jsonDataSelectListCnt";
+    	HashMap<String, Object> view = this.mybatisModelImpl.getData(argInfoVO, DAOName, MethodName);
+        return (Integer)view.get("CNT");
+
+    }
 	
     public List<HashMap<String, Object>> jsonContentList(HashMap<String, Object> argInfoVO) throws Exception {
     	String DAOName = "SP_PARSING_MASTER";

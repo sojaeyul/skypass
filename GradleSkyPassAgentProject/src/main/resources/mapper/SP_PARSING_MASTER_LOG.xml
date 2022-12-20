@@ -35,6 +35,7 @@
 			    ,#{createdAt}
 			    ,#{jsonData }       							   	
 			    ,now()
+        )
     </insert>
     <update id="jsonDataUpdate" parameterType="java.util.HashMap">
     </update>    

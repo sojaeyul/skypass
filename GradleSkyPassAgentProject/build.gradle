@@ -67,7 +67,9 @@ dependencies {
 	compile group: 'commons-collections', name: 'commons-collections', version: '3.2.2'
     // https://mvnrepository.com/artifact/org.quartz-scheduler/quartz
 	compile group: 'org.quartz-scheduler', name: 'quartz', version: '2.3.2'
-     
+	// https://mvnrepository.com/artifact/commons-net/commons-net
+	implementation group: 'commons-net', name: 'commons-net', version: '3.9.0'
+ 
 
     // https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-s3
     compile group: 'com.amazonaws', name: 'aws-java-sdk-s3', version: '1.12.360'	
