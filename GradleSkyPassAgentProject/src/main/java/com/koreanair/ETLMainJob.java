@@ -2,17 +2,20 @@ package com.koreanair;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.stream.Collectors;
 
 import org.quartz.InterruptableJob;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
 import org.quartz.UnableToInterruptJobException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +23,7 @@ import org.slf4j.LoggerFactory;
 import com.koreanair.biz.CreateJsonParsingDataService;
 import com.koreanair.common.util.DateUtil;
 import com.koreanair.dao.SpParsingMasterDAO;
-import com.koreanair.dao.SpParsingMasterLogDAO;
+import com.koreanair.dto.ServiceMDEEntriesGroupKey;
 
 public class ETLMainJob implements InterruptableJob {
 	private final static Logger log = LoggerFactory.getLogger(ETLMainJob.class);
@@ -57,7 +60,7 @@ public class ETLMainJob implements InterruptableJob {
 	        }
 	        
 	        //2. Thread
-	        bizThreadCall();
+	        //bizThreadCall();
 	        
 	        //3. truncate
 	        service.tableTruncate(true);
@@ -88,24 +91,30 @@ public class ETLMainJob implements InterruptableJob {
 		int threadCount = 1000;
 		ExecutorService executorService = Executors.newFixedThreadPool(threadCount);
 		try{
-			SpParsingMasterDAO spParsingMasterDAO = new SpParsingMasterDAO();	   
-			//SpParsingMasterLogDAO spParsingMasterDAO = new SpParsingMasterLogDAO();
+			SpParsingMasterDAO spParsingMasterDAO = new SpParsingMasterDAO();
 			
 			int totalInsertCnt = 0;
 			while(true) {
 		        List<HashMap<String, Object>> alist= spParsingMasterDAO.jsonContentList(new HashMap<String, Object>());
 		        if(alist!=null && alist.size()>0) {
-					for(int i = 0; i < alist.size(); i++ ){				
+			        //그룹핑
+			        Map<ServiceMDEEntriesGroupKey, List<HashMap<String, Object>>> collect = alist.stream()
+			                								  .collect(Collectors.groupingBy(ServiceMDEEntriesGroupKey::new));
+			        int i=0;
+			        for (Entry<ServiceMDEEntriesGroupKey, List<HashMap<String, Object>>> entrySet : collect.entrySet()) {	
+			        	List<HashMap<String, Object>> list = entrySet.getValue();
+			        	
 						String threadName = i + "번째 스레드";				
-						Callable<String> thread = new ETLProcessThread(this, threadName, alist.get(i)) ;				
+						Callable<String> thread = new ETLProcessThread(this, threadName, list) ;				
 						callableFutureList.add(executorService.submit(thread));
+						i++;
 					}
 					
 					while(callableFutureList.size() != 0){
-						for(int i = 0 ; i < callableFutureList.size() ; i++){
-							Future<String> callable = callableFutureList.get(i);
+						for(int z = 0 ; z < callableFutureList.size() ; z++){
+							Future<String> callable = callableFutureList.get(z);
 							if(callable.isDone()){
-								callableFutureList.remove(i);
+								callableFutureList.remove(z);
 							}
 						}
 					}
@@ -126,8 +135,42 @@ public class ETLMainJob implements InterruptableJob {
 	
 	
 	public static void main(String[] args) throws Exception {
-		//SpParsingMasterDAO spParsingMasterDAO = new SpParsingMasterDAO();	   
+		/*
 		ETLMainJob spParsingMasterDAO = new ETLMainJob();
 		spParsingMasterDAO.bizThreadCall();
+		*/
+		
+		SpParsingMasterDAO spParsingMasterDAO = new SpParsingMasterDAO();	 
+        List<HashMap<String, Object>> alist= spParsingMasterDAO.jsonContentList(new HashMap<String, Object>());
+        //alist.forEach(System.out::println);
+        
+        
+        //그룹핑
+        Map<ServiceMDEEntriesGroupKey, List<HashMap<String, Object>>> collect = alist.stream()
+                								  									.collect(Collectors.groupingBy(ServiceMDEEntriesGroupKey::new));//Method Reference
+        
+        for (Entry<ServiceMDEEntriesGroupKey, List<HashMap<String, Object>>> entrySet : collect.entrySet()) {
+            //log.debug(entrySet.getKey() + " : " + entrySet.getValue().size() + " => " + entrySet.getValue());
+            
+            List<HashMap<String, Object>> list = entrySet.getValue();
+            
+
+            Comparator<HashMap<String, Object>> seqASC = Comparator.comparing((HashMap<String, Object> map) -> (Integer) map.get("seq"));//내림차순
+            Comparator<HashMap<String, Object>> membershipresourceidDESC = Comparator.comparing((HashMap<String, Object> map) ->(String)map.get("membershipresourceid")).reversed();//오름차순
+            Comparator<HashMap<String, Object>> createdAtDESC = Comparator.comparing((HashMap<String, Object> map) ->(String)map.get("createdat")).reversed();//오름차순
+            
+            list.sort(Comparator.comparing((HashMap<String, Object> map) -> (String) map.get("membershipid"))
+            				.thenComparing(membershipresourceidDESC)
+            				.thenComparing(seqASC)
+            				.thenComparing(createdAtDESC)
+            				);
+      
+            for(HashMap<String, Object> map : list) {
+            	log.debug("        => " + map.get("seq") + " : " + map.get("membershipid") + " : " + map.get("membershipresourceid") + " : " + map.get("createdat") + " : " + map);
+            }
+            
+
+        }
+        
 	}
 }

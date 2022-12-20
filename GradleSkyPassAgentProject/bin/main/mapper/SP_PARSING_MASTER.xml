@@ -13,6 +13,7 @@
 		    ,operation
 		    ,action
 		    ,createdat
+		    --,to_char(to_timestamp(createdat,'YYYY-MM-DD"T"HH24:MI:SS'),'YYYYMMDDHH24MISSMS') AS createdat
 		    ,jsondata
 		    ,creaedate
 		from sp_parsing_master
@@ -35,7 +36,7 @@
 		    ,jsondata
 		    ,creaedate
 		from sp_parsing_master
-		offset 0 rows fetch next 1 rows only	
+		offset 0 rows fetch next 500000 rows only	
 	</select>
     <insert id="jsonDataInsert" parameterType="java.util.HashMap">
         insert into sp_parsing_master (

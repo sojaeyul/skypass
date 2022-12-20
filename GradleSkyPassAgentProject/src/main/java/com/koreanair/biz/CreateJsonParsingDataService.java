@@ -2,8 +2,11 @@ package com.koreanair.biz;
 
 import java.io.File;
 import java.io.Reader;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Properties;
+import java.util.TimeZone;
 
 import org.apache.ibatis.io.Resources;
 import org.json.simple.JSONObject;
@@ -20,6 +23,8 @@ import com.koreanair.dao.SpParsingMasterDAO;
 
 public class CreateJsonParsingDataService {
 	private final static Logger log = LoggerFactory.getLogger(CreateJsonParsingDataService.class);
+	private SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+	private SimpleDateFormat formatter2 = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 	
 	private String jsonFilePath="";
 	SpParsingMasterDAO spParsingMasterDAO = null;
@@ -82,7 +87,8 @@ public class CreateJsonParsingDataService {
 	                					JSONParser mdeMetaJsonParser = new JSONParser();
 	                					JSONObject mdeMetaJsonObj = (JSONObject)mdeMetaJsonParser.parse(mdeMetaJsonData);
 	                					JSONObject data = (JSONObject)mdeMetaJsonObj.get("created");
-	                					mdeMetaVO.put("createdat", (String)data.get("at"));
+	                					
+	                					mdeMetaVO.put("createdat", formatter2.format(formatter.parse((String)data.get("at"))));
 	                					//parsing end
 	                					
 	                    			}else if("serviceMDEEntries".equals(StringUtil.NVL(responseSubfieldName)))  {

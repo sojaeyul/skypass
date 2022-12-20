@@ -50,11 +50,11 @@ public class TestGroupBy {
         Map<SalesKey, List<Sales>> collect = dtos.stream()
                 .collect(Collectors.groupingBy(SalesKey::new));//Method Reference
         
-        /*
+        
         for (Entry<SalesKey, List<Sales>> entrySet : collect.entrySet()) {
             System.out.println(entrySet.getKey() + " : " + entrySet.getValue());
         }
-        */
+        
         // then
         int sum = 0;
         System.out.println("=======================================");
