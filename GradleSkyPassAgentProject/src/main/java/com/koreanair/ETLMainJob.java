@@ -133,44 +133,4 @@ public class ETLMainJob implements InterruptableJob {
 		}
 	}	
 	
-	
-	public static void main(String[] args) throws Exception {
-		/*
-		ETLMainJob spParsingMasterDAO = new ETLMainJob();
-		spParsingMasterDAO.bizThreadCall();
-		*/
-		
-		SpParsingMasterDAO spParsingMasterDAO = new SpParsingMasterDAO();	 
-        List<HashMap<String, Object>> alist= spParsingMasterDAO.jsonContentList(new HashMap<String, Object>());
-        //alist.forEach(System.out::println);
-        
-        
-        //그룹핑
-        Map<ServiceMDEEntriesGroupKey, List<HashMap<String, Object>>> collect = alist.stream()
-                								  									.collect(Collectors.groupingBy(ServiceMDEEntriesGroupKey::new));//Method Reference
-        
-        for (Entry<ServiceMDEEntriesGroupKey, List<HashMap<String, Object>>> entrySet : collect.entrySet()) {
-            //log.debug(entrySet.getKey() + " : " + entrySet.getValue().size() + " => " + entrySet.getValue());
-            
-            List<HashMap<String, Object>> list = entrySet.getValue();
-            
-
-            Comparator<HashMap<String, Object>> seqASC = Comparator.comparing((HashMap<String, Object> map) -> (Integer) map.get("seq"));//내림차순
-            Comparator<HashMap<String, Object>> membershipresourceidDESC = Comparator.comparing((HashMap<String, Object> map) ->(String)map.get("membershipresourceid")).reversed();//오름차순
-            Comparator<HashMap<String, Object>> createdAtDESC = Comparator.comparing((HashMap<String, Object> map) ->(String)map.get("createdat")).reversed();//오름차순
-            
-            list.sort(Comparator.comparing((HashMap<String, Object> map) -> (String) map.get("membershipid"))
-            				.thenComparing(membershipresourceidDESC)
-            				.thenComparing(seqASC)
-            				.thenComparing(createdAtDESC)
-            				);
-      
-            for(HashMap<String, Object> map : list) {
-            	log.debug("        => " + map.get("seq") + " : " + map.get("membershipid") + " : " + map.get("membershipresourceid") + " : " + map.get("createdat") + " : " + map);
-            }
-            
-
-        }
-        
-	}
 }
