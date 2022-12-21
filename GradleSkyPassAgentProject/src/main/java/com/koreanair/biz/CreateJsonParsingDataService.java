@@ -20,6 +20,7 @@ import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.MappingJsonFactory;
 import com.koreanair.common.util.ComUtil;
 import com.koreanair.dao.SpParsingMasterDAO;
+import com.koreanair.dto.ResourceInfoEnum;
 
 public class CreateJsonParsingDataService {
 	private final static Logger log = LoggerFactory.getLogger(CreateJsonParsingDataService.class);
@@ -193,7 +194,8 @@ public class CreateJsonParsingDataService {
 	}
 	
 	public static void main(String[] args) throws Exception {
-		CreateJsonParsingDataService service = new CreateJsonParsingDataService();
-		service.createMoveParsingData();
+		//CreateJsonParsingDataService service = new CreateJsonParsingDataService();
+		//service.createMoveParsingData();
+				
 	}
 }
