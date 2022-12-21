@@ -41,6 +41,10 @@
 			    ,action
 			    ,createdat
 			    ,jsondata
+			    ,process
+			    ,processthreadname
+			    ,processorderby
+			    ,processlog			    
 			    ,creaedate
         ) values (
 			    #{membershipid}
@@ -49,7 +53,11 @@
 			    ,#{operation}
 			    ,#{action}
 			    ,#{createdat}
-			    ,#{jsondata }   							   	
+			    ,#{jsondata}  
+			    ,#{process}
+			    ,#{processthreadname}
+			    ,#{processorderby}
+			    ,#{processlog}
 			    ,now()
         )
     </insert>

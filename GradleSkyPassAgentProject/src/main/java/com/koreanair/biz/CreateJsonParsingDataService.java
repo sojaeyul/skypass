@@ -18,7 +18,7 @@ import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.MappingJsonFactory;
-import com.koreanair.common.util.StringUtil;
+import com.koreanair.common.util.ComUtil;
 import com.koreanair.dao.SpParsingMasterDAO;
 
 public class CreateJsonParsingDataService {
@@ -51,35 +51,35 @@ public class CreateJsonParsingDataService {
 	        while (jsonParser.nextToken() != JsonToken.END_OBJECT) {
 	        	String fieldName = jsonParser.getCurrentName(); // 필드명, 필드값 토큰인 경우 필드명, 나머지 토큰은 null 리턴      
 	        	//log.debug("fieldName :: " + fieldName );        	
-	        	if ("id".equals(StringUtil.NVL(fieldName)) 
-	        			|| "batchInstanceId".equals(StringUtil.NVL(fieldName))
-	        			|| "seqNumber".equals(StringUtil.NVL(fieldName))
-	        			|| "loyaltySystem".equals(StringUtil.NVL(fieldName))
-	        			|| "partner".equals(StringUtil.NVL(fieldName))
-	        			|| "service".equals(StringUtil.NVL(fieldName))
-	        			|| "additionalData".equals(StringUtil.NVL(fieldName))
-	        			|| "recordsCount".equals(StringUtil.NVL(fieldName))        			
-	        			|| "statistics".equals(StringUtil.NVL(fieldName))
-	        			|| "businessStatistics".equals(StringUtil.NVL(fieldName))
+	        	if ("id".equals(ComUtil.NVL(fieldName)) 
+	        			|| "batchInstanceId".equals(ComUtil.NVL(fieldName))
+	        			|| "seqNumber".equals(ComUtil.NVL(fieldName))
+	        			|| "loyaltySystem".equals(ComUtil.NVL(fieldName))
+	        			|| "partner".equals(ComUtil.NVL(fieldName))
+	        			|| "service".equals(ComUtil.NVL(fieldName))
+	        			|| "additionalData".equals(ComUtil.NVL(fieldName))
+	        			|| "recordsCount".equals(ComUtil.NVL(fieldName))        			
+	        			|| "statistics".equals(ComUtil.NVL(fieldName))
+	        			|| "businessStatistics".equals(ComUtil.NVL(fieldName))
 	        		) {  
 	        		jsonParser.nextToken();  
 	        		jsonParser.readValueAsTree();
 	        		//log.debug("fieldName :: " + fieldName + " :: " +jsonParser.readValueAsTree());        	
-	        	}else if ("records".equals(StringUtil.NVL(fieldName))) {
+	        	}else if ("records".equals(ComUtil.NVL(fieldName))) {
 	        		while (jsonParser.nextToken() != JsonToken.END_ARRAY) {
 	        			while (jsonParser.nextToken() != JsonToken.END_OBJECT) {
 	        				String recordsSubfieldName = jsonParser.getCurrentName();  
-	                		if ("index".equals(StringUtil.NVL(recordsSubfieldName)) 
-	                    			|| "identifier".equals(StringUtil.NVL(recordsSubfieldName))
-	                    			|| "status".equals(StringUtil.NVL(recordsSubfieldName))
+	                		if ("index".equals(ComUtil.NVL(recordsSubfieldName)) 
+	                    			|| "identifier".equals(ComUtil.NVL(recordsSubfieldName))
+	                    			|| "status".equals(ComUtil.NVL(recordsSubfieldName))
 	                    		) {  
 	                			jsonParser.nextToken();  
 	                    		jsonParser.readValueAsTree();       	
-	                    	}else if ("response".equals(StringUtil.NVL(recordsSubfieldName))) {
+	                    	}else if ("response".equals(ComUtil.NVL(recordsSubfieldName))) {
 	                    		HashMap<String, Object> mdeMetaVO = new HashMap<String, Object>();
 	                    		while (jsonParser.nextToken() != JsonToken.END_OBJECT) {
 	                    			String responseSubfieldName = jsonParser.getCurrentName(); 
-	                    			if("MDEMeta".equals(StringUtil.NVL(responseSubfieldName)))  {
+	                    			if("MDEMeta".equals(ComUtil.NVL(responseSubfieldName)))  {
 	                					jsonParser.nextToken();  
 	                					String mdeMetaJsonData = jsonParser.readValueAsTree().toString();
 	                					
@@ -91,7 +91,7 @@ public class CreateJsonParsingDataService {
 	                					mdeMetaVO.put("createdat", formatter2.format(formatter.parse((String)data.get("at"))));
 	                					//parsing end
 	                					
-	                    			}else if("serviceMDEEntries".equals(StringUtil.NVL(responseSubfieldName)))  {
+	                    			}else if("serviceMDEEntries".equals(ComUtil.NVL(responseSubfieldName)))  {
 	                    				while (jsonParser.nextToken() != JsonToken.END_ARRAY) {
 	                    					//1. USE JSON DATA
 	                    					createParsingData(jsonParser, mdeMetaVO);

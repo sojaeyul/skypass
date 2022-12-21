@@ -94,17 +94,18 @@ public class ETLMainJob implements InterruptableJob {
 			SpParsingMasterDAO spParsingMasterDAO = new SpParsingMasterDAO();
 			
 			int totalInsertCnt = 0;
+			int selCnt = 1;
 			while(true) {
 		        List<HashMap<String, Object>> alist= spParsingMasterDAO.jsonContentList(new HashMap<String, Object>());
 		        if(alist!=null && alist.size()>0) {
 			        //그룹핑
 			        Map<ServiceMDEEntriesGroupKey, List<HashMap<String, Object>>> collect = alist.stream()
 			                								  .collect(Collectors.groupingBy(ServiceMDEEntriesGroupKey::new));
-			        int i=0;
+			        int i=1;
 			        for (Entry<ServiceMDEEntriesGroupKey, List<HashMap<String, Object>>> entrySet : collect.entrySet()) {	
 			        	List<HashMap<String, Object>> list = entrySet.getValue();
 			        	
-						String threadName = i + "번째 스레드";				
+						String threadName = "Thread_"+selCnt+"_"+i;				
 						Callable<String> thread = new ETLProcessThread(this, threadName, list) ;				
 						callableFutureList.add(executorService.submit(thread));
 						i++;
@@ -119,6 +120,7 @@ public class ETLMainJob implements InterruptableJob {
 						}
 					}
 					totalInsertCnt = totalInsertCnt + alist.size();
+					selCnt++;
 					log.debug(String.format("[%-18s][☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆ %d]", "Thread End", totalInsertCnt));
 		        }else {
 		        	break;

@@ -2,8 +2,7 @@ package com.koreanair.biz;
 
 import java.util.HashMap;
 
-
-
+import org.apache.ibatis.session.SqlSession;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -16,9 +15,10 @@ public class JsonDataParsingService {
     
     
    	
-	public void parsingData(HashMap<String, Object> jsonMap) throws Exception {
+	public void parsingData(HashMap<String, Object> jsonMap, SqlSession sqlSession) throws Exception {
 		String jsonString =  (String)jsonMap.get("jsondata"); 			
 
+		
 		//log.debug("jsonString :: " + jsonString);
 		
 		//1. parsing start

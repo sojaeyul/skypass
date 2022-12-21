@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import com.koreanair.biz.JsonDataParsingService;
 import com.koreanair.common.db.MyBatisConnectionFactory;
+import com.koreanair.common.util.ComUtil;
 import com.koreanair.dao.SpParsingMasterDAO;
 import com.koreanair.dao.SpParsingMasterLogDAO;
 
@@ -30,9 +31,8 @@ public class ETLProcessThread implements Callable<String>{
 	}
 	
 	public String call(){
-		SqlSession sqlSession = sqlSessionFactory.openSession();
+		
 		try{
-			
             Comparator<HashMap<String, Object>> seqASC = Comparator.comparing((HashMap<String, Object> map) -> (Integer) map.get("seq"));//내림차순
             Comparator<HashMap<String, Object>> membershipresourceidDESC = Comparator.comparing((HashMap<String, Object> map) ->(String)map.get("membershipresourceid")).reversed();//오름차순
             Comparator<HashMap<String, Object>> createdAtDESC = Comparator.comparing((HashMap<String, Object> map) ->(String)map.get("createdat")).reversed();//오름차순
@@ -42,31 +42,49 @@ public class ETLProcessThread implements Callable<String>{
             				.thenComparing(seqASC)
             				.thenComparing(createdAtDESC)
             				);
-			
+			int processorderby = 0;
             for(HashMap<String, Object> jsonMap : jsonList) {
+            	processorderby++;
             	
-				//1. parsing
-				JsonDataParsingService parsingService = new JsonDataParsingService();
-				parsingService.parsingData(jsonMap);			
-				
-				
-				//2. log insert
-				SpParsingMasterLogDAO logDAO = new SpParsingMasterLogDAO();
-				logDAO.jsonSave(sqlSession, jsonMap);
-				//logDAO.jsonDelete(sqlSession, seq); 
-				
-				//3. master delete
-				SpParsingMasterDAO masterDAO = new SpParsingMasterDAO();
-				masterDAO.jsonDelete(sqlSession, jsonMap);
-				//masterDAO.jsonSave(sqlSession, jsonString);
+            	bizProcess(jsonMap, processorderby);
+
             }
 		}catch(Exception ex){
-			log.error("☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆ETLProcess Thread ERROR☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆", ex);
+			log.error("☆ETLProcess Thread ERROR☆", ex);
+		}
+		
+		return threadName + "번 콜라블 종료";
+	}
+	
+	public void bizProcess(HashMap<String, Object> jsonMap, int processorderby){
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		jsonMap.put("process", "C");
+		jsonMap.put("processlog", "");
+		try {
+			//1. parsing
+			try {
+				JsonDataParsingService parsingService = new JsonDataParsingService();
+				parsingService.parsingData(jsonMap, sqlSession);
+			}catch(Exception ex) {
+				log.error("☆ETLProcess Thread Error☆", ex);
+				jsonMap.put("process", "E");
+				jsonMap.put("processlog", ComUtil.PrintStackTraceToString(ex));
+			}			
+
+			//2. log insert
+			jsonMap.put("processthreadname", this.threadName);
+			jsonMap.put("processorderby", processorderby);
+			SpParsingMasterLogDAO logDAO = new SpParsingMasterLogDAO();
+			logDAO.jsonSave(sqlSession, jsonMap);
+			
+			//3. master delete
+			SpParsingMasterDAO masterDAO = new SpParsingMasterDAO();
+			masterDAO.jsonDelete(sqlSession, jsonMap);
+		}catch(Exception ex){
+			log.error("☆ETLProcess Thread ERROR☆", ex);
 		} finally {
 	    	sqlSession.commit();
 	    	sqlSession.close();
 	    }
-		
-		return threadName + "번 콜라블 종료";
 	}
 }
