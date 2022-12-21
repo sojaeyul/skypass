@@ -54,7 +54,7 @@ public class ETLMainJob implements InterruptableJob {
 	        	service.createMoveParsingData();
 	        	//service.createParsingDataSmaple();
 	        }catch(Exception ex) {
-	    		log.error("☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆CreateJSONParsing ERROR☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆", ex);
+	    		log.error("☆CreateJSONParsing ERROR☆", ex);
 	    		service.tableTruncate(false);
 	    		throw ex;
 	        }
@@ -72,7 +72,7 @@ public class ETLMainJob implements InterruptableJob {
 	        log.debug(DateUtil.dateDiff(startDate, endDate));
 	        
     	}catch(Exception ex) {
-    		log.error("☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆ETLMainJob ERROR☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆", ex);
+    		log.error("☆ETLMainJob ERROR☆", ex);
     	}
     }
  
@@ -127,7 +127,7 @@ public class ETLMainJob implements InterruptableJob {
 		        }
 			}
 		}catch(Exception ex){
-			log.error("☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆ETLMainJob Thread Call ERROR☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆", ex);
+			log.error("☆ETLMainJob Thread Call ERROR☆", ex);
 			executorService.shutdownNow();
 			throw ex;
 		}finally{
