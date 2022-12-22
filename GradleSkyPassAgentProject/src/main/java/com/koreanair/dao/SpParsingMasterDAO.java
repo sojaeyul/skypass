@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.koreanair.common.db.MybatisModelImpl;
+import com.koreanair.common.util.ComUtil;
 
 
 public class SpParsingMasterDAO {
@@ -29,16 +30,31 @@ public class SpParsingMasterDAO {
     }
     
     public Long jsonDataSelectListCnt(HashMap<String, Object> argInfoVO) throws Exception {
+    	String appServerNum = ComUtil.NVL(System.getProperty("app.server.num"));
+    	
     	String DAOName = "SKYPASS.SP_PARSING_MASTER";
     	String MethodName = "jsonDataSelectListCnt";
+    	if(!appServerNum.equals("")) {
+    		MethodName = "jsonDataSelectListCntBigBang";
+    		//argInfoVO.put("tablename", "sp_parsing_master"+appServerNum);
+    		argInfoVO.put("tablename", "sp_parsing_master");
+    	}
     	HashMap<String, Object> view = this.mybatisModelImpl.getData(argInfoVO, DAOName, MethodName);
         return (Long)view.get("cnt");
 
     }
 	
     public List<HashMap<String, Object>> jsonContentList(HashMap<String, Object> argInfoVO) throws Exception {
+    	String appServerNum = ComUtil.NVL(System.getProperty("app.server.num"));
+    	
     	String DAOName = "SKYPASS.SP_PARSING_MASTER";
     	String MethodName = "jsonDataSelectList";
+    	if(!appServerNum.equals("")) {
+    		MethodName = "jsonDataSelectListBigBang";
+    		//argInfoVO.put("tablename", "sp_parsing_master"+appServerNum);
+    		argInfoVO.put("tablename", "sp_parsing_master");
+    	}
+    	
     	List<HashMap<String, Object>> alist = this.mybatisModelImpl.getDataList(argInfoVO, DAOName, MethodName);
         return alist;
 

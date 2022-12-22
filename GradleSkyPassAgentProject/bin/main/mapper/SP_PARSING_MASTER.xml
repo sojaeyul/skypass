@@ -4,7 +4,13 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
     
 <mapper namespace="SKYPASS.SP_PARSING_MASTER">
-	<select id="jsonDataSelect" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+
+	<select id="jsonDataSelectListCntBigBang" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		select 
+		    coalesce(count(*),0) as cnt
+		from ${tablename}
+	</select>	
+	<select id="jsonDataSelectListBigBang" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		select 
 		     seq
 		    ,membershipid
@@ -13,12 +19,12 @@
 		    ,operation
 		    ,action
 		    ,createdat
-		    --,to_char(to_timestamp(createdat,'YYYY-MM-DD"T"HH24:MI:SS'),'YYYYMMDDHH24MISSMS') AS createdat
 		    ,jsondata
 		    ,creaedate
-		from sp_parsing_master
-		where seq = #{seq}
-	</select>
+		from ${tablename}
+		offset 0 rows fetch next 500000 rows only	
+	</select>	
+	
 	<select id="jsonDataSelectListCnt" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		select 
 		    coalesce(count(*),0) as cnt
@@ -37,6 +43,22 @@
 		    ,creaedate
 		from sp_parsing_master
 		offset 0 rows fetch next 500000 rows only	
+	</select>
+
+	<select id="jsonDataSelect" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		select 
+		     seq
+		    ,membershipid
+		    ,membershipresourceid
+		    ,resource
+		    ,operation
+		    ,action
+		    ,createdat
+		    --,to_char(to_timestamp(createdat,'YYYY-MM-DD"T"HH24:MI:SS'),'YYYYMMDDHH24MISSMS') AS createdat
+		    ,jsondata
+		    ,creaedate
+		from sp_parsing_master
+		where seq = #{seq}
 	</select>
     <insert id="jsonDataInsert" parameterType="java.util.HashMap">
         insert into sp_parsing_master (
