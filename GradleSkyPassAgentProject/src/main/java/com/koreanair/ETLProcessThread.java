@@ -9,7 +9,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.koreanair.biz.JsonDataParsingService;
+import com.koreanair.biz.JsonParsingMainService;
 import com.koreanair.common.db.MyBatisConnectionFactory;
 import com.koreanair.common.util.ComUtil;
 import com.koreanair.dao.SpParsingMasterDAO;
@@ -18,7 +18,6 @@ import com.koreanair.dao.SpParsingMasterLogDAO;
 public class ETLProcessThread implements Callable<String>{ 
 	private final static Logger log = LoggerFactory.getLogger(ETLProcessThread.class);
 	
-	private SqlSessionFactory sqlSessionFactory = null;
 	String threadName;
 	ETLMainJob parent;
 	List<HashMap<String, Object>> jsonList;
@@ -27,7 +26,6 @@ public class ETLProcessThread implements Callable<String>{
 		this.parent = parent;
 		this.threadName = threadName;
 		this.jsonList = jsonList;
-		this.sqlSessionFactory = MyBatisConnectionFactory.getSqlSessionFactory();
 	}
 	
 	public String call(){
@@ -57,34 +55,33 @@ public class ETLProcessThread implements Callable<String>{
 	}
 	
 	public void bizProcess(HashMap<String, Object> jsonMap, int processorderby){
-		SqlSession sqlSession = sqlSessionFactory.openSession();
 		jsonMap.put("process", "C");
 		jsonMap.put("processlog", "");
 		try {
 			//1. parsing
 			try {
-				JsonDataParsingService parsingService = new JsonDataParsingService();
-				parsingService.parsingData(jsonMap, sqlSession);
+				JsonParsingMainService parsingService = new JsonParsingMainService();
+				parsingService.parsingData(jsonMap);
 			}catch(Exception ex) {
 				log.error("☆ETLProcess Thread Error☆", ex);
 				jsonMap.put("process", "E");
 				jsonMap.put("processlog", ComUtil.PrintStackTraceToString(ex));
 			}			
 
-			//2. log insert
+			//2. master delete
+			SpParsingMasterDAO masterDAO = new SpParsingMasterDAO();
+			masterDAO.jsonDelete(jsonMap);
+			
+			//3. log insert
 			jsonMap.put("processthreadname", this.threadName);
 			jsonMap.put("processorderby", processorderby);
 			SpParsingMasterLogDAO logDAO = new SpParsingMasterLogDAO();
-			logDAO.jsonSave(sqlSession, jsonMap);
+			logDAO.jsonSave(jsonMap);
 			
-			//3. master delete
-			SpParsingMasterDAO masterDAO = new SpParsingMasterDAO();
-			masterDAO.jsonDelete(sqlSession, jsonMap);
 		}catch(Exception ex){
 			log.error("☆ETLProcess Thread ERROR☆", ex);
 		} finally {
-	    	sqlSession.commit();
-	    	sqlSession.close();
+	    	
 	    }
 	}
 }
