@@ -9,13 +9,13 @@ import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class MembershipBiz {
-	private final static Logger log = LoggerFactory.getLogger(MembershipBiz.class);
-	public MembershipBiz() {
-		log.debug("MembershipBiz 생성자 호출");
+public class BillingsBiz {
+	private final static Logger log = LoggerFactory.getLogger(BillingsBiz.class);
+	public BillingsBiz() {
+		log.debug("BillingsBiz 생성자 호출");
 	}
 
-	public boolean doJsonToDBCreate(SqlSession sqlSession, HashMap<String, Object> jsonMap, String spec, String nodeRoot) throws Exception{
+	public boolean doJsonToDBCreate(SqlSession sqlSession, HashMap<String, Object> jsonMap, String spec, String nodeRoot) throws Exception {
 		
 		//1. parsing start		
 		JSONParser jsonParser = new JSONParser();

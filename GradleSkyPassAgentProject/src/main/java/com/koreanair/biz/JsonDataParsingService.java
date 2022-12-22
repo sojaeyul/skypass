@@ -16,19 +16,19 @@ public class JsonDataParsingService {
 
 	public void parsingData(HashMap<String, Object> jsonMap, SqlSession sqlSession) throws Exception {	
 
-		ResourceInfoEnum enums = ResourceInfoEnum.valueOf("MEMBERSHIP");
-		String bizClass = enums.getBizClass();
-		String description = enums.getDescription();
+		String resource = (String)jsonMap.get("resource");
 		
-		log.debug("bizClass :: " + bizClass);
-		log.debug("description :: " + description);
+		ResourceInfoEnum enums = ResourceInfoEnum.valueOf(resource);
+		String bizClass = enums.getBizClass();
+		String spec = enums.getSpec();
+		String nodeRoot = enums.getNodeRoot();
 		
 		Class<?> enumCl = Class.forName(bizClass);
 		Constructor<?> constructor = enumCl.getConstructor(null);
 		Object obj = constructor.newInstance();
 		
-		Method method = enumCl.getMethod("doJsonToDBCreate", HashMap.class);
-		String returnVal = (String)method.invoke(obj, jsonMap);
+		Method method = enumCl.getMethod("doJsonToDBCreate", SqlSession.class, HashMap.class, String.class, String.class);
+		boolean returnVal = (Boolean)method.invoke(obj, sqlSession, jsonMap, spec, nodeRoot);
 		
 		log.debug("returnVal :: " + returnVal);
 	}
