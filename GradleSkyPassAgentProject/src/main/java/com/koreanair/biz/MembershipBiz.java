@@ -33,7 +33,7 @@ public class MembershipBiz {
 			for (Object obj : root) {
 				JSONObject data = (JSONObject)obj;
 				if(data.containsKey("data")) {
-					log.debug(data.toJSONString());
+					//log.debug(data.toJSONString());
 				}
 			}    
 			//parsing end
