@@ -168,8 +168,6 @@ public class FtpFileUploadClient {
 	 */
 	protected boolean makeDirectory(String path){
 		try{
-			log.debug("FTP 서버 로그아웃");
-
 			return ftpClient.makeDirectory(path);
 		}catch(IOException e){
 			e.printStackTrace();

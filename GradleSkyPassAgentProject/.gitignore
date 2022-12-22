@@ -73,3 +73,4 @@ deploy
 .vscode/
 bin/main/application.yml
 /skypass_etl.2022-12-16.log
+/skypass_etl.2022-12-20.log
