@@ -2,7 +2,6 @@ package com.koreanair;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,7 +60,7 @@ public class ETLMainJob implements InterruptableJob {
 	        CreateJsonParsingDataService service = new CreateJsonParsingDataService();
 	        //1. 파싱데이터 생성
 	        try {
-	        	//service.createMoveParsingData();
+	        	service.createMoveParsingData();
 	        }catch(Exception ex) {
 	    		log.error("☆CreateJSONParsing ERROR☆", ex);
 	    		service.tableTruncate(false);
@@ -69,10 +68,10 @@ public class ETLMainJob implements InterruptableJob {
 	        }
 	        
 	        //2. Thread
-	        bizThreadCall();
+	        //bizThreadCall();
 	        
 	        //3. truncate
-	        service.tableTruncate(true);
+	        //service.tableTruncate(true);
 	        ///////////////////////////////////////////////////////////////////////////	        
 	        
 	        Calendar endDate = Calendar.getInstance();

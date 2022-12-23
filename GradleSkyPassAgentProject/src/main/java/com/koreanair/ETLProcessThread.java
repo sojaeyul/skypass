@@ -4,13 +4,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.koreanair.biz.JsonParsingMainService;
-import com.koreanair.common.db.MyBatisConnectionFactory;
 import com.koreanair.common.util.ComUtil;
 import com.koreanair.dao.SpParsingMasterDAO;
 import com.koreanair.dao.SpParsingMasterLogDAO;
