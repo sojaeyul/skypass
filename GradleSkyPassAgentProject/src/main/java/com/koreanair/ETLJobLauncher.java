@@ -1,5 +1,7 @@
 package com.koreanair;
 
+import java.lang.management.ManagementFactory;
+import java.lang.management.MemoryMXBean;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -77,6 +79,14 @@ public class ETLJobLauncher {
     
     
 	public static void main(String[] args) throws Exception  {
+		
+		int mb = 1024 * 1024;
+		MemoryMXBean memoryBean = ManagementFactory.getMemoryMXBean();
+		long xmx = memoryBean.getHeapMemoryUsage().getMax() / mb;
+		long xms = memoryBean.getHeapMemoryUsage().getInit() / mb;
+		log.info(String.format("Initial Memory (xms) : {%s}mb", xms));
+		log.info(String.format("Max Memory (xmx) : {%s}mb", xmx) );
+		
 		//trace>debug>info>warn>error
         // Scheduler 실행
         start();	        
@@ -100,7 +110,7 @@ public class ETLJobLauncher {
                                         .build();	        
         
         // CronTrigger 생성(주지적으로 반복에 사용)	  
-        CronScheduleBuilder cronSch = CronScheduleBuilder.cronSchedule(new CronExpression("0 0 10,13,16 * * ?"));
+        CronScheduleBuilder cronSch = CronScheduleBuilder.cronSchedule(new CronExpression("0 0 10,13 * * ?"));
         CronTrigger cronTrigger = (CronTrigger) TriggerBuilder.newTrigger()
                                     .withIdentity("cron_trigger", "cron_trigger_group")
                                     .withSchedule(cronSch)

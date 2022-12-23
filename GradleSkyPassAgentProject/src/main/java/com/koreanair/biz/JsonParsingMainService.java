@@ -32,7 +32,7 @@ public class JsonParsingMainService {
 			Method method = enumCl.getMethod("doJsonToDBCreate", HashMap.class, String.class, String.class);
 			boolean returnVal = (Boolean)method.invoke(obj, jsonMap, spec, nodeRoot);
 			
-			log.debug("returnVal :: " + returnVal);
+			//log.debug("returnVal :: " + returnVal);
 		}catch(java.lang.IllegalArgumentException ie) {
 			log.debug(String.format("[%-18s]은 대상이 아닙니다.", resource));
 			jsonMap.put("process", "N");

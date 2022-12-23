@@ -30,7 +30,7 @@
 		    ,jsondata
 		    ,creaedate
 		from sp_parsing_master_log
-		offset 0 rows fetch next 500000 rows only	
+		offset 0 rows fetch next 400000 rows only	
 	</select>
     <insert id="jsonDataInsert" parameterType="java.util.HashMap">
         insert into sp_parsing_master_log (

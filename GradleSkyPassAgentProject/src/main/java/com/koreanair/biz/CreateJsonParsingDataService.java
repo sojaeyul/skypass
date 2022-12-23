@@ -3,10 +3,10 @@ package com.koreanair.biz;
 import java.io.File;
 import java.io.Reader;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Locale;
+import java.util.List;
 import java.util.Properties;
-import java.util.TimeZone;
 
 import org.apache.ibatis.io.Resources;
 import org.json.simple.JSONObject;
@@ -15,12 +15,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonLocation;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.MappingJsonFactory;
 import com.koreanair.common.util.ComUtil;
 import com.koreanair.dao.SpParsingMasterDAO;
-import com.koreanair.dto.ResourceInfoEnum;
 
 public class CreateJsonParsingDataService {
 	private final static Logger log = LoggerFactory.getLogger(CreateJsonParsingDataService.class);
@@ -111,39 +111,58 @@ public class CreateJsonParsingDataService {
 	}
 	
 	public void createParsingData(JsonParser jsonParser, HashMap<String, Object> mdeMetaVO) throws Exception {
+		List<HashMap<String, Object>> jsonContentList = new ArrayList<HashMap<String, Object>>();
+		HashMap<String, Object> jsonContentVO = new HashMap<String, Object>();
 		HashMap<String, Object> contentVO = new HashMap<String, Object>();
-		while (jsonParser.nextToken() != JsonToken.END_OBJECT) {
+		while (jsonParser.nextToken() != JsonToken.END_OBJECT) {			
+			JsonLocation jsonLocation = jsonParser.currentTokenLocation();
+			//log.debug("jsonLocation :: " + jsonLocation);
+			//log.debug("readValueAsTree :: " + jsonParser.readValueAsTree().toString());			
 			String mDEEntriesSubfieldName = jsonParser.getCurrentName(); 
 			if("membershipResourceId".equals(mDEEntriesSubfieldName)) {
 				 jsonParser.nextToken();  
 				 contentVO.put("membershipresourceid", jsonParser.getText());
+				 jsonContentVO.put("membershipResourceId", jsonParser.getText());
 			}else if("membershipId".equals(mDEEntriesSubfieldName)) {
 				jsonParser.nextToken();  
 				contentVO.put("membershipid", jsonParser.getText());
+				jsonContentVO.put("membershipId", jsonParser.getText());
 			}else if("exportReasons".equals(mDEEntriesSubfieldName)) {
 				while (jsonParser.nextToken() != JsonToken.END_ARRAY) {
+					HashMap<String, Object> jsonContentSubVO = new HashMap<String, Object>();
 					while (jsonParser.nextToken() != JsonToken.END_OBJECT) {
 						String fieldName2= jsonParser.getCurrentName();
 						if("resource".equals(fieldName2)) {
 							jsonParser.nextToken();  
 							contentVO.put("resource", jsonParser.getText());
+							jsonContentSubVO.put("resource", jsonParser.getText());
 						}else if("action".equals(fieldName2)) {
 							jsonParser.nextToken();  
-							contentVO.put("action", jsonParser.getText());	 
+							contentVO.put("action", jsonParser.getText());	
+							jsonContentSubVO.put("action", jsonParser.getText());
 						}else if("operation".equals(fieldName2)) {
 							jsonParser.nextToken();  
 							contentVO.put("operation", jsonParser.getText());
+							jsonContentSubVO.put("operation", jsonParser.getText());
 						}else if("activityId".equals(fieldName2)) {
 							jsonParser.nextToken();  
 							contentVO.put("activityid", jsonParser.getText());
+							jsonContentSubVO.put("activityId", jsonParser.getText());
 						}
 					}
+					jsonContentList.add(jsonContentSubVO);
 				}
+				jsonContentVO.put("exportReasons", jsonContentList);
 			}else if("serviceMDEData".equals(mDEEntriesSubfieldName)) {
 				 jsonParser.nextToken();  
-				 contentVO.put("jsondata", jsonParser.readValueAsTree().toString());
+				 //contentVO.put("jsondata", jsonParser.readValueAsTree().toString());
+				 jsonContentVO.put("serviceMDEData", new JSONParser().parse(jsonParser.readValueAsTree().toString()));
 			}
 		}//JsonToken.END_ARRAY
+		
+		
+		JSONObject jsonContentVOTojsonObject = new JSONObject(jsonContentVO);
+		contentVO.put("jsondata", jsonContentVOTojsonObject.toJSONString());
 		
 		//contentVO.putAll(mdeMetaVO);
 		mdeMetaVO.forEach((key, value) -> contentVO.merge(key, value, (v1, v2) -> v2));
@@ -158,38 +177,6 @@ public class CreateJsonParsingDataService {
 			}
 		}else if(!check){
 			spParsingMasterDAO.tableTruncate();
-		}
-	}
-	
-	public void createParsingDataSmaple() throws Exception {
-        JsonFactory jsonFactory = new MappingJsonFactory();  
-        File jsonFile = new File("D:\\test.json");
-        JsonParser jsonParser = jsonFactory.createParser(jsonFile); // json 파서 생성  
-		try {
-	        int i = 0;
-	        while (jsonParser.nextToken() != JsonToken.END_OBJECT) { // END_OBJECT(}) 가 나올 때까지 토큰 순회  
-	            String fieldName = jsonParser.getCurrentName(); // 필드명, 필드값 토큰인 경우 필드명, 나머지 토큰은 null 리턴  
-	  
-	            if ("recode".equals(fieldName)) {  
-	                jsonParser.nextToken(); // 필드값 토큰으로 이동  
-	                while (jsonParser.nextToken() != JsonToken.END_OBJECT) { // END_OBJECT(}) 가 나올 때까지 토큰 순회 
-	                	jsonParser.nextToken();
-	                	i++;
-	                	String treeValue = jsonParser.readValueAsTree().toString();
-	                	//System.out.println("recode"+i+" :: " + treeValue);
-	                	//JsonUtil.parsingData(treeValue);
-	                	//JsonSimpleUtil.parsingData(i, treeValue);
-	                	//if(i==6)break;
-	                	HashMap<String, Object> contentVO = new HashMap<String, Object>();
-	                	contentVO.put("jsonData", treeValue);
-	                	spParsingMasterDAO.jsonSave(contentVO);
-	                	System.out.println("recode"+i+" :: " + treeValue);
-	                	//if(i==6)break;
-	                }
-	            }
-	        }
-		}finally {
-			jsonParser.close(); 
 		}
 	}
 	

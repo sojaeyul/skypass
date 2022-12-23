@@ -33,6 +33,16 @@ public class ETLMainJob implements InterruptableJob {
     private Thread jboCurrentThread = null;
     
     @Override
+    public void interrupt() throws UnableToInterruptJobException {
+        // interrupt 설정
+        //   - 강제종료
+        if( this.jboCurrentThread != null ) {
+            this.jboCurrentThread.interrupt();
+        }
+    }
+    
+        
+    @Override
     public void execute(JobExecutionContext context) {
     	
     	try {
@@ -51,8 +61,7 @@ public class ETLMainJob implements InterruptableJob {
 	        CreateJsonParsingDataService service = new CreateJsonParsingDataService();
 	        //1. 파싱데이터 생성
 	        try {
-	        	service.createMoveParsingData();
-	        	//service.createParsingDataSmaple();
+	        	//service.createMoveParsingData();
 	        }catch(Exception ex) {
 	    		log.error("☆CreateJSONParsing ERROR☆", ex);
 	    		service.tableTruncate(false);
@@ -75,17 +84,6 @@ public class ETLMainJob implements InterruptableJob {
     		log.error("☆ETLMainJob ERROR☆", ex);
     	}
     }
- 
-    @Override
-    public void interrupt() throws UnableToInterruptJobException {
-        // interrupt 설정
-        //   - 강제종료
-        if( this.jboCurrentThread != null ) {
-            this.jboCurrentThread.interrupt();
-        }
-    }
-    
-    
     
 	public void bizThreadCall() throws Exception{
 		int threadCount = 1000;

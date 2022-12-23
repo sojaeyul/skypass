@@ -22,7 +22,7 @@
 		    ,jsondata
 		    ,creaedate
 		from ${tablename}
-		offset 0 rows fetch next 500000 rows only	
+		offset 0 rows fetch next 400000 rows only	
 	</select>	
 	
 	<select id="jsonDataSelectListCnt" parameterType="java.util.HashMap" resultType="java.util.HashMap">

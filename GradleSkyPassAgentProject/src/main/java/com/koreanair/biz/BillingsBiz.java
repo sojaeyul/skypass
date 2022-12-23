@@ -17,7 +17,7 @@ public class BillingsBiz {
 	private SqlSessionFactory sqlSessionFactory = null;
 	
 	public BillingsBiz() {
-		log.debug("BillingsBiz 생성자 호출");
+		//log.debug("BillingsBiz 생성자 호출");
 		this.sqlSessionFactory = MyBatisConnectionFactory.getSqlSessionFactory();
 	}
 
@@ -28,14 +28,16 @@ public class BillingsBiz {
 			//1. parsing start		
 			JSONParser jsonParser = new JSONParser();
 			JSONObject jsonObj = (JSONObject)jsonParser.parse((String)jsonMap.get("jsondata"));
-			JSONArray root = (JSONArray)jsonObj.get(nodeRoot);
+			JSONObject mdeData = (JSONObject)jsonObj.get("serviceMDEData");
+			
+			JSONArray root = (JSONArray)mdeData.get(nodeRoot);
 	
 			for (Object obj : root) {
 				JSONObject data = (JSONObject)obj;
 				if(data.containsKey("data")) {
 					//log.debug(data.toJSONString());
 				}
-			}    
+			}     
 			//parsing end
 		
 			bi=true;

@@ -17,7 +17,7 @@ public class ActivityBiz {
 	private SqlSessionFactory sqlSessionFactory = null;
 	
 	public ActivityBiz() {
-		log.debug("ActivityBiz 생성자 호출");
+		//log.debug("ActivityBiz 생성자 호출");
 		this.sqlSessionFactory = MyBatisConnectionFactory.getSqlSessionFactory();
 	}
 
@@ -28,7 +28,9 @@ public class ActivityBiz {
 			//1. parsing start		
 			JSONParser jsonParser = new JSONParser();
 			JSONObject jsonObj = (JSONObject)jsonParser.parse((String)jsonMap.get("jsondata"));
-			JSONArray root = (JSONArray)jsonObj.get(nodeRoot);
+			JSONObject mdeData = (JSONObject)jsonObj.get("serviceMDEData");
+			
+			JSONArray root = (JSONArray)mdeData.get(nodeRoot);
 	
 			for (Object obj : root) {
 				JSONObject data = (JSONObject)obj;
