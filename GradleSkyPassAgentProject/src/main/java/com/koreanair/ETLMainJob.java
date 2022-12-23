@@ -68,10 +68,10 @@ public class ETLMainJob implements InterruptableJob {
 	        }
 	        
 	        //2. Thread
-	        //bizThreadCall();
+	        bizThreadCall();
 	        
 	        //3. truncate
-	        //service.tableTruncate(true);
+	        service.tableTruncate(true);
 	        ///////////////////////////////////////////////////////////////////////////	        
 	        
 	        Calendar endDate = Calendar.getInstance();
@@ -94,6 +94,7 @@ public class ETLMainJob implements InterruptableJob {
 			int selCnt = 1;
 			while(true) {
 		        List<HashMap<String, Object>> alist= spParsingMasterDAO.jsonContentList(new HashMap<String, Object>());
+		        log.debug(String.format("[%-18s][☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆ %d]", "Thread start", alist.size()));
 		        if(alist!=null && alist.size()>0) {
 			        //그룹핑
 			        Map<ServiceMDEEntriesGroupKey, List<HashMap<String, Object>>> collect = alist.stream()
