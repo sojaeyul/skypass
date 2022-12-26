@@ -12,6 +12,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 
+import org.quartz.DisallowConcurrentExecution;
 import org.quartz.InterruptableJob;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
@@ -20,11 +21,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.koreanair.biz.CreateJsonParsingDataService;
-import com.koreanair.biz.CreateJsonParsingDataThreadService;
 import com.koreanair.common.util.DateUtil;
 import com.koreanair.dao.SpParsingMasterDAO;
 import com.koreanair.dto.ServiceMDEEntriesGroupKey;
 
+@DisallowConcurrentExecution
 public class ETLMainJob implements InterruptableJob {
 	private final static Logger log = LoggerFactory.getLogger(ETLMainJob.class);
 	
@@ -70,10 +71,10 @@ public class ETLMainJob implements InterruptableJob {
 	        }
 	        
 	        //2. Thread
-//	        bizThreadCall();
+	        bizThreadCall();
 	        
 	        //3. truncate
-//	        service.tableTruncate(true);
+	        service.tableTruncate(true);
 	        ///////////////////////////////////////////////////////////////////////////	        
 	        
 	        Calendar endDate = Calendar.getInstance();

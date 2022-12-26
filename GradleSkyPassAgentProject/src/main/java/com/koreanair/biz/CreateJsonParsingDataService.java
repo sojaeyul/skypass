@@ -197,7 +197,7 @@ public class CreateJsonParsingDataService {
 		
 		//contentVO.putAll(mdeMetaVO);
 		mdeMetaVO.forEach((key, value) -> contentVO.merge(key, value, (v1, v2) -> v2));
-		spParsingMasterDAO.jsonSave(contentVO);
+		//spParsingMasterDAO.jsonSave(contentVO);
 	}	
 	
 	public void tableTruncate(boolean check) throws Exception {
