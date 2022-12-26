@@ -48,7 +48,7 @@ public class ETLProcessThread implements Callable<String>{
 			log.error("☆ETLProcess Thread ERROR☆", ex);
 		}
 		
-		return threadName + "번 콜라블 종료";
+		return threadName + "Thread End";
 	}
 	
 	public void bizProcess(HashMap<String, Object> jsonMap, int processorderby){

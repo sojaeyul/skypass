@@ -34,7 +34,7 @@ public class SpParsingMasterDAO {
     	
     	String DAOName = "SKYPASS.SP_PARSING_MASTER";
     	String MethodName = "jsonDataSelectListCnt";
-    	if(!appServerNum.equals("")) {
+    	if(!appServerNum.equals("") && !appServerNum.equals("1")) {
     		MethodName = "jsonDataSelectListCntBigBang";
     		//argInfoVO.put("tablename", "sp_parsing_master"+appServerNum);
     		argInfoVO.put("tablename", "sp_parsing_master");
@@ -49,7 +49,7 @@ public class SpParsingMasterDAO {
     	
     	String DAOName = "SKYPASS.SP_PARSING_MASTER";
     	String MethodName = "jsonDataSelectList";
-    	if(!appServerNum.equals("")) {
+    	if(!appServerNum.equals("") && !appServerNum.equals("1")) {
     		MethodName = "jsonDataSelectListBigBang";
     		//argInfoVO.put("tablename", "sp_parsing_master"+appServerNum);
     		argInfoVO.put("tablename", "sp_parsing_master");
@@ -122,10 +122,10 @@ public class SpParsingMasterDAO {
 
 	
 	public static void main(String[] args) throws Exception {
-		SpParsingMasterDAO dao = new SpParsingMasterDAO();
-		List<HashMap<String, Object>> list = dao.jsonContentList(new HashMap<String, Object>());
-		
-		list.forEach(System.out::println);
+//		SpParsingMasterDAO dao = new SpParsingMasterDAO();
+//		List<HashMap<String, Object>> list = dao.jsonContentList(new HashMap<String, Object>());
+//		
+//		list.forEach(System.out::println);
 	}
 	
 }
