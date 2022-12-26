@@ -44,7 +44,6 @@ public class CreateJsonParsingDataService {
 	
 	
 	public void createMoveParsingData() throws Exception {
-        
         JsonFactory jsonFactory = new MappingJsonFactory();  
         File jsonFile = new File(jsonFilePath);
         JsonParser jsonParser = jsonFactory.createParser(jsonFile); // json 파서 생성  
@@ -52,7 +51,7 @@ public class CreateJsonParsingDataService {
 
 	        while (jsonParser.nextToken() != JsonToken.END_OBJECT) {
 	        	String fieldName = jsonParser.getCurrentName(); // 필드명, 필드값 토큰인 경우 필드명, 나머지 토큰은 null 리턴      
-	        	//log.debug("fieldName :: " + fieldName );        	
+	        	log.debug("fieldName :: " + fieldName );        	
 	        	if ("id".equals(ComUtil.NVL(fieldName)) 
 	        			|| "batchInstanceId".equals(ComUtil.NVL(fieldName))
 	        			|| "seqNumber".equals(ComUtil.NVL(fieldName))
@@ -111,6 +110,35 @@ public class CreateJsonParsingDataService {
 		}
 	}
 	
+	public void createParsingData(JsonParser jsonParser, HashMap<String, Object> mdeMetaVO) throws Exception {
+		HashMap<String, Object> contentVO = new HashMap<String, Object>();
+		jsonParser.nextToken();
+		String jsonData = jsonParser.readValueAsTree().toString();
+		
+		//1. parsing start		
+		JSONParser jsonParserS = new JSONParser();
+		JSONObject jsonObj = (JSONObject)jsonParserS.parse(jsonData);
+		
+		JSONArray exportReasons = (JSONArray)jsonObj.get("exportReasons");
+		
+		contentVO.put("membershipresourceid", jsonObj.get("membershipResourceId"));
+		contentVO.put("membershipid", jsonObj.get("membershipId"));
+		
+		for (Object obj : exportReasons) {
+			JSONObject data = (JSONObject)obj;
+			contentVO.put("resource", data.get("resource"));
+			contentVO.put("action", data.get("action"));
+			contentVO.put("operation", data.get("operation"));
+			contentVO.put("activityid", data.get("activityId"));
+		} 
+		
+		contentVO.put("jsondata", jsonObj.toJSONString());
+		
+		//contentVO.putAll(mdeMetaVO);
+		mdeMetaVO.forEach((key, value) -> contentVO.merge(key, value, (v1, v2) -> v2));
+		spParsingMasterDAO.jsonSave(contentVO);
+	}	
+	
 	public void createTokenParsingData(JsonParser jsonParser, HashMap<String, Object> mdeMetaVO) throws Exception {
 		List<HashMap<String, Object>> jsonContentList = new ArrayList<HashMap<String, Object>>();
 		HashMap<String, Object> jsonContentVO = new HashMap<String, Object>();
@@ -167,38 +195,12 @@ public class CreateJsonParsingDataService {
 		
 		//contentVO.putAll(mdeMetaVO);
 		mdeMetaVO.forEach((key, value) -> contentVO.merge(key, value, (v1, v2) -> v2));
+		
 		spParsingMasterDAO.jsonSave(contentVO);
 	}
 	
 	
-	public void createParsingData(JsonParser jsonParser, HashMap<String, Object> mdeMetaVO) throws Exception {
-		HashMap<String, Object> contentVO = new HashMap<String, Object>();
-		jsonParser.nextToken();
-		String jsonData = jsonParser.readValueAsTree().toString();
-		
-		//1. parsing start		
-		JSONParser jsonParserS = new JSONParser();
-		JSONObject jsonObj = (JSONObject)jsonParserS.parse(jsonData);
-		
-		JSONArray exportReasons = (JSONArray)jsonObj.get("exportReasons");
-		
-		contentVO.put("membershipresourceid", jsonObj.get("membershipResourceId"));
-		contentVO.put("membershipid", jsonObj.get("membershipId"));
-		
-		for (Object obj : exportReasons) {
-			JSONObject data = (JSONObject)obj;
-			contentVO.put("resource", data.get("resource"));
-			contentVO.put("action", data.get("action"));
-			contentVO.put("operation", data.get("operation"));
-			contentVO.put("activityid", data.get("activityId"));
-		} 
-		
-		contentVO.put("jsondata", jsonObj.toJSONString());
-		
-		//contentVO.putAll(mdeMetaVO);
-		mdeMetaVO.forEach((key, value) -> contentVO.merge(key, value, (v1, v2) -> v2));
-		//spParsingMasterDAO.jsonSave(contentVO);
-	}	
+
 	
 	public void tableTruncate(boolean check) throws Exception {
 		if(check) {

@@ -35,14 +35,11 @@ repositories {
 
 dependencies {
     // This dependency is exported to consumers, that is to say found on their compile classpath.
-    api 'org.apache.commons:commons-math3:3.6.1'
+    //api 'org.apache.commons:commons-math3:3.6.1'
 
     // This dependency is used internally, and not exposed to consumers on their own compile classpath.
-    implementation 'com.google.guava:guava:29.0-jre'
+    //implementation 'com.google.guava:guava:29.0-jre'
     
-	// https://mvnrepository.com/artifact/org.projectlombok/lombok
-	compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.24'
-
     // https://mvnrepository.com/artifact/org.mybatis/mybatis
 	compile group: 'org.mybatis', name: 'mybatis', version: '3.5.11'
     // https://mvnrepository.com/artifact/org.apache.commons/commons-dbcp2
@@ -68,25 +65,23 @@ dependencies {
     // https://mvnrepository.com/artifact/org.quartz-scheduler/quartz
 	compile group: 'org.quartz-scheduler', name: 'quartz', version: '2.3.2'
 	// https://mvnrepository.com/artifact/commons-net/commons-net
-	implementation group: 'commons-net', name: 'commons-net', version: '3.9.0'
+	compile group: 'commons-net', name: 'commons-net', version: '3.9.0'
 	// https://mvnrepository.com/artifact/com.jcraft/jsch
-	implementation group: 'com.jcraft', name: 'jsch', version: '0.1.44-1'	
+	compile group: 'com.jcraft', name: 'jsch', version: '0.1.44-1'	
 	// https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk16
-	implementation group: 'org.bouncycastle', name: 'bcprov-jdk16', version: '1.45'
-	// https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15on
-	//implementation group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: '1.64'
+	compile group: 'org.bouncycastle', name: 'bcprov-jdk16', version: '1.45'
     // https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-s3
     compile group: 'com.amazonaws', name: 'aws-java-sdk-s3', version: '1.12.360'	
-    // https://mvnrepository.com/artifact/io.findify/s3mock
-    testImplementation group: 'io.findify', name: 's3mock_2.13', version: '0.2.6'
     // https://mvnrepository.com/artifact/org.modelmapper/modelmapper
-    implementation group: 'org.modelmapper', name: 'modelmapper', version: '3.1.1'
+    compile group: 'org.modelmapper', name: 'modelmapper', version: '3.1.1'
 
-    implementation 'org.slf4j:slf4j-api:1.7.31'
-    implementation 'ch.qos.logback:logback-core:1.2.3'
-    implementation ('ch.qos.logback:logback-classic:1.2.3'){
+    compile 'org.slf4j:slf4j-api:1.7.31'
+    compile 'ch.qos.logback:logback-core:1.2.3'
+    compile ('ch.qos.logback:logback-classic:1.2.3'){
     	exclude group: 'org.slf4j', module: 'slf4j-api'
     	exclude group: 'ch.qos.logback', module: 'logback-core'
     }
-    annotationProcessor 'org.projectlombok:lombok'     
+    
+	compileOnly 'org.projectlombok:lombok:1.18.24'
+	annotationProcessor 'org.projectlombok:lombok:1.18.24'
 }
