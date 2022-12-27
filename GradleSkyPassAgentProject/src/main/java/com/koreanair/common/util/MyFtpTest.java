@@ -12,7 +12,8 @@ public class MyFtpTest {
 		MySFTPClient mySFTPClinet = new MySFTPClient();
 		System.out.print("프로토콜 유형: ");
 		try {
-			command = br.readLine();
+			//command = br.readLine();
+			command = "sftp";
 			if (command.equals("ftp") || command.equals("FTP")) {
 				myFTPClient.start();
 			} else if (command.equals("sftp") || command.equals("SFTP")) {
@@ -21,7 +22,7 @@ public class MyFtpTest {
 				System.out.println("어떤 프로토콜을 쓸건지 다시 입력해주세요.");
 				System.exit(0);
 			}
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

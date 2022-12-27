@@ -23,7 +23,7 @@
 		    ,jsondata
 		    ,creaedate
 		from ${tablename}
-		offset 0 rows fetch next 400000 rows only	
+		offset 0 rows fetch next 300000 rows only	
 	</select>	
 	
 	<select id="jsonDataSelectListCnt" parameterType="java.util.HashMap" resultType="java.util.HashMap">
@@ -44,7 +44,7 @@
 		    ,jsondata
 		    ,creaedate
 		from sp_parsing_master
-		offset 0 rows fetch next 500000 rows only	
+		offset 0 rows fetch next 300000 rows only	
 	</select>
 
 	<select id="jsonDataSelect" parameterType="java.util.HashMap" resultType="java.util.HashMap">

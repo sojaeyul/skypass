@@ -40,22 +40,31 @@ public class MySFTPClient {
 		Session session = null;
 		Channel channel = null;
 		JSch jsch = new JSch();
-
+		
 		Scanner scanner = new Scanner(System.in);
+		/*
 		log.debug("계정 입력: ");
 		String username = scanner.nextLine();
 		log.debug("호스트 주소 입력: ");
 		String host = scanner.nextLine();
 		log.debug("비밀번호 입력: ");
 		String password = scanner.nextLine();
-
+		*/
+		String username = "sojaeyul";
+		//String host = "DESKTOP-21M3D07";
+		String host = "10.111.119.20";
+		String password ="vmffjtm2022!";
 		try {
 			// 세션 객체 생성
 			session = jsch.getSession(username, host, 22);
 			// 비밀번호설정
 			session.setPassword(password);
-			// 호스트 정보를 검사하지 않음
-			session.setConfig("StrictHostKeyChecking", "no");
+			
+			java.util.Properties configuration = new java.util.Properties();
+			//configuration.put("kex", "diffie-hellman-group1-sha1,diffie-hellman-group14-sha1,diffie-hellman-group-exchange-sha1,diffie-hellman-group-exchange-sha256");
+			configuration.put("KexAlgorithms", "diffie-hellman-group1-sha1");
+			configuration.put("StrictHostKeyChecking", "no");// 호스트 정보를 검사하지 않음
+			session.setConfig(configuration);
 			// 세션접속
 			session.connect();
 			// sftp채널열기

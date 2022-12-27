@@ -92,7 +92,7 @@ public class ETLMainJob implements InterruptableJob {
 		ExecutorService executorService = Executors.newFixedThreadPool(threadCount);
 		try{
 			SpParsingMasterDAO spParsingMasterDAO = new SpParsingMasterDAO();
-			log.debug("==Thread End==");
+			log.debug("==Thread Start==");
 			int totalInsertCnt = 0;
 			int selCnt = 1;
 			while(true) {
@@ -122,7 +122,7 @@ public class ETLMainJob implements InterruptableJob {
 					}
 					totalInsertCnt = totalInsertCnt + alist.size();
 					selCnt++;
-					log.debug(String.format("[%-18s][☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆ %d]", "Thread End", totalInsertCnt));
+					log.debug(String.format("[%-18s][☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆ %d]", "Thread Total End", totalInsertCnt));
 		        }else {
 		        	break;
 		        }
