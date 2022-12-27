@@ -18,6 +18,7 @@
 		    ,resource
 		    ,operation
 		    ,action
+		    ,id
 		    ,createdat
 		    ,jsondata
 		    ,creaedate
@@ -38,6 +39,7 @@
 		    ,resource
 		    ,operation
 		    ,action
+		    ,id
 		    ,createdat
 		    ,jsondata
 		    ,creaedate
@@ -53,6 +55,7 @@
 		    ,resource
 		    ,operation
 		    ,action
+		    ,id
 		    ,createdat
 		    --,to_char(to_timestamp(createdat,'YYYY-MM-DD"T"HH24:MI:SS'),'YYYYMMDDHH24MISSMS') AS createdat
 		    ,jsondata
@@ -67,6 +70,7 @@
 			    ,resource
 			    ,operation
 			    ,action
+			    ,id
 			    ,createdat
 			    ,jsondata
 			    ,creaedate
@@ -76,6 +80,7 @@
 			    ,#{resource}
 			    ,#{operation}
 			    ,#{action}
+			    ,#{id}
 			    ,#{createdat}
 			    ,#{jsondata }       							   	
 			    ,now()

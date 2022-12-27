@@ -4,9 +4,13 @@ import java.io.File;
 import java.io.Reader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
+import java.util.StringJoiner;
 
 import org.apache.ibatis.io.Resources;
 import org.json.simple.JSONArray;
@@ -27,6 +31,7 @@ public class CreateJsonParsingDataService {
 	private final static Logger log = LoggerFactory.getLogger(CreateJsonParsingDataService.class);
 	private SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 	private SimpleDateFormat formatter2 = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+	private String[] exportIdArray = {"subscriptionId","cardId","relationId","tierId","activityId","grantId","retroId","billingId","liabilityId","noteId","segmentationId","registrationId","voucherId","accrualId","partnerProfileId","poolId","termsAndConditionsId"};
 	
 	private String jsonFilePath="";
 	SpParsingMasterDAO spParsingMasterDAO = null;
@@ -51,7 +56,7 @@ public class CreateJsonParsingDataService {
 
 	        while (jsonParser.nextToken() != JsonToken.END_OBJECT) {
 	        	String fieldName = jsonParser.getCurrentName(); // 필드명, 필드값 토큰인 경우 필드명, 나머지 토큰은 null 리턴      
-	        	log.debug("fieldName :: " + fieldName );        	
+	        	//log.debug("fieldName :: " + fieldName );        	
 	        	if ("id".equals(ComUtil.NVL(fieldName)) 
 	        			|| "batchInstanceId".equals(ComUtil.NVL(fieldName))
 	        			|| "seqNumber".equals(ComUtil.NVL(fieldName))
@@ -93,10 +98,18 @@ public class CreateJsonParsingDataService {
 	                					//parsing end
 	                					
 	                    			}else if("serviceMDEEntries".equals(ComUtil.NVL(responseSubfieldName)))  {
+	                    				int rowCnt=0;
+	                    				log.debug("== Create Json Data Start ==");
 	                    				while (jsonParser.nextToken() != JsonToken.END_ARRAY) {
+	                    					if(rowCnt!=0 && rowCnt%100000 ==0) {
+	                    						log.debug(String.format("Create Json Data [%18s]", rowCnt));
+	                    					}
+	                    					rowCnt++;
 	                    					//1. USE JSON DATA
 	                    					createParsingData(jsonParser, mdeMetaVO);
+	                    					
 	                    				}//JsonToken.END_ARRAY
+	                    				log.debug("== Create Json Data END ==> "+rowCnt);
 	                    				//createParsingData(jsonParser);
 	                    			}//if
 	                    		}//JsonToken.END_OBJECT
@@ -123,15 +136,28 @@ public class CreateJsonParsingDataService {
 		
 		contentVO.put("membershipresourceid", jsonObj.get("membershipResourceId"));
 		contentVO.put("membershipid", jsonObj.get("membershipId"));
-		
+	
+		StringJoiner resource = new StringJoiner(",");
+		StringJoiner action = new StringJoiner(",");
+		StringJoiner operation = new StringJoiner(",");
+		StringJoiner id = new StringJoiner(",");
 		for (Object obj : exportReasons) {
 			JSONObject data = (JSONObject)obj;
-			contentVO.put("resource", data.get("resource"));
-			contentVO.put("action", data.get("action"));
-			contentVO.put("operation", data.get("operation"));
-			contentVO.put("activityid", data.get("activityId"));
+			resource.add((String)data.get("resource"));
+			action.add((String)data.get("action"));
+			operation.add((String)data.get("operation"));
+	        for (Map.Entry<String, Object> entrySet : (Set<Map.Entry<String, Object>>)data.entrySet()) {
+				if(Arrays.stream(exportIdArray).anyMatch(entrySet.getKey()::equals)) {
+					id.add((String)entrySet.getValue());
+					break;
+				}
+	        }
 		} 
 		
+		contentVO.put("resource", resource.toString());
+		contentVO.put("action", action.toString());
+		contentVO.put("operation", operation.toString());
+		contentVO.put("id", id.toString());		
 		contentVO.put("jsondata", jsonObj.toJSONString());
 		
 		//contentVO.putAll(mdeMetaVO);
@@ -216,6 +242,18 @@ public class CreateJsonParsingDataService {
 	public static void main(String[] args) throws Exception {
 		//CreateJsonParsingDataService service = new CreateJsonParsingDataService();
 		//service.createMoveParsingData();
-				
+			
+		/*
+		Iterator<Map.Entry<String, Object>> iter = data.entrySet().iterator();
+		while(iter.hasNext()) {
+			Map.Entry<String, Object> entrySet = (Map.Entry<String, Object>)iter.next();
+			log.debug(String.format("111[%-20s][%s]", entrySet.getKey(), entrySet.getValue()));
+			if(Arrays.stream(exportIdArray).anyMatch(entrySet.getKey()::equals)) {
+				id.add((String)entrySet.getValue());
+				break;
+			}
+		}
+		*/
+	
 	}
 }

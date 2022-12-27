@@ -92,7 +92,7 @@ public class ETLMainJob implements InterruptableJob {
 		ExecutorService executorService = Executors.newFixedThreadPool(threadCount);
 		try{
 			SpParsingMasterDAO spParsingMasterDAO = new SpParsingMasterDAO();
-			
+			log.debug("==Thread End==");
 			int totalInsertCnt = 0;
 			int selCnt = 1;
 			while(true) {
@@ -127,6 +127,7 @@ public class ETLMainJob implements InterruptableJob {
 		        	break;
 		        }
 			}
+			log.debug("==Thread End==");
 		}catch(Exception ex){
 			log.error("☆ETLMainJob Thread Call ERROR☆", ex);
 			executorService.shutdownNow();

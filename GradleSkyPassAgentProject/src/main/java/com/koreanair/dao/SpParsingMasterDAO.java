@@ -126,6 +126,12 @@ public class SpParsingMasterDAO {
 //		List<HashMap<String, Object>> list = dao.jsonContentList(new HashMap<String, Object>());
 //		
 //		list.forEach(System.out::println);
+		
+		for(int i=0; i<6; i++) {
+			if(i%2 ==0) {
+				System.out.println("i ::" + i);
+			}
+		}
 	}
 	
 }
