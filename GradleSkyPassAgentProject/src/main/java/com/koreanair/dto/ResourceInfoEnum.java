@@ -9,9 +9,8 @@ public enum ResourceInfoEnum {
 
 	MEMBERSHIP("com.koreanair.biz.MembershipBiz","MEMBERSHIP","","A membership represents a contract between an entity (individual, organization) and a loyalty program, which allows the entity to benefit from this program."),
 	ACTIVITY("com.koreanair.biz.ActivityBiz","ACTIVITIES","activities","Related membership Activity subresources included in massive export"),//멤버십 활동 관련 하위 리소스
-	BILLING("com.koreanair.biz.BillingsBiz","BILLINGS","billings","Billings of the member"),//회원 청구서
-	
-	SUBSCRIPTION("SUBSCRIPTION","SUBSCRIPTION","","Related membership Subscription subresources included in massive export"),//멤버십 구독 관련 하위 리소스
+	//BILLING("com.koreanair.biz.BillingsBiz","BILLINGS","billings","Billings of the member"),//회원 청구서	
+	SUBSCRIPTION("SUBSCRIPTION","SUBSCRIPTION","","Related membership Subscription subresources included in massive export"),//멤버십 신청 관련 하위 리소스
 	RELATIONS("RELATIONS","RELATIONS","","Related membership Relation resources included in massive export"),//멥버십 관련 관계 리소스
 	CARDS("CARDS","CARDS","","Related membership Card subresources included in massive export"),//멤버십 관련 카드 하위 리소스
 	TIERS("TIERS","TIERS","","Related membership Tier subresources included in massive export"),//멤버십 관련 등급 하위 리소스
@@ -22,8 +21,8 @@ public enum ResourceInfoEnum {
 	REGISTRATIONS("REGISTRATIONS","REGISTRATIONS","","Promotion registrations resources inclueded in massive export"),//프로모션 등록 리소스
 	VOUCHERS("VOUCHERS","VOUCHERS","","Voucher resources included in massive export"),//바우처 리소스
 	PARTNERPROFILE("PARTNERPROFILE","PARTNERPROFILE","","PartnerProfile information"),//PartnerProfile 정보
-	ACCRUALS("ACCRUALS","ACCRUALS","","Accrual resources included in massive export"),//발생 자원
-	TERMSANDCONDITIONS("TERMSANDCONDITIONS","TERMSANDCONDITIONS","","Terms and onditions resources included in massive export")	//이용약관 리소스
+	ACCRUALS("ACCRUALS","ACCRUALS","","Accrual resources included in massive export"),//적립금 자원(ACR)
+	TERMSANDCONDITIONS("TERMSANDCONDITIONS","TERMSANDCONDITIONS","","Terms and conditions resources included in massive export")//이용약관 리소스
 	;
 	
 	private String bizClass;
