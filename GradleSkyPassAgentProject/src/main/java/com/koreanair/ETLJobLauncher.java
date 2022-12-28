@@ -111,7 +111,7 @@ public class ETLJobLauncher {
         
         // CronTrigger 생성(주지적으로 반복에 사용)	  
         //CronScheduleBuilder cronSch = CronScheduleBuilder.cronSchedule(new CronExpression("0/10 * * * * ?"));
-        CronScheduleBuilder cronSch = CronScheduleBuilder.cronSchedule(new CronExpression("0 0 13,14,15 * * ?"));
+        CronScheduleBuilder cronSch = CronScheduleBuilder.cronSchedule(new CronExpression("0 0 11,12,13,14,15 * * ?"));
         CronTrigger cronTrigger = (CronTrigger) TriggerBuilder.newTrigger()
                                     .withIdentity("cron_trigger", "cron_trigger_group")
                                     .withSchedule(cronSch)

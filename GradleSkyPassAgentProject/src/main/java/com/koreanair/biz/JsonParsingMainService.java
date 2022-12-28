@@ -34,7 +34,7 @@ public class JsonParsingMainService {
 			
 			//log.debug("returnVal :: " + returnVal);
 		}catch(java.lang.IllegalArgumentException ie) {
-			log.debug(String.format("[%-18s]은 대상이 아닙니다.", resource));
+			//log.debug(String.format("[%-18s]은 대상이 아닙니다.", resource));
 			jsonMap.put("process", "N");
 			jsonMap.put("processlog", String.format("[%-18s]은 대상이 아닙니다.", resource));
 		}

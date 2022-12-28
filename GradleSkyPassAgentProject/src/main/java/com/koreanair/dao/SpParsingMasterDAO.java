@@ -104,6 +104,17 @@ public class SpParsingMasterDAO {
 		String DAONameS = "SKYPASS.SP_PARSING_MASTER";
     	String MethodNameS = "jsonDataInsert";
     	
+    	/*
+        for (Entry<String, Object> entrySet : contentVO.entrySet()) {
+            log.debug(String.format("[%-20s][%s]", entrySet.getKey(), entrySet.getValue()));
+            
+        }
+        */
+    	/*
+        contentVO.forEach((key, value) -> log.debug(String.format("[%-20s][%s]", key, value)));        
+        log.debug("=========================================================================");
+        */
+    	
     	i = this.mybatisModelImpl.addData(sqlSession, contentVO, DAONameS, MethodNameS);
     	
     	return i;
