@@ -4,4 +4,4 @@ ARG JAR_FILE=build/libs/*.jar
 COPY ${JAR_FILE} app.jar
 # timezone 적용
 ENV TZ Asia/Seoul
-ENTRYPOINT ["java","-Xms256m","-Xmx2048m","-jar","-Dskypass.instance=dev","-Dapp.server.num=1","app.jar"]
+ENTRYPOINT ["java","-Xms256m","-Xmx3072m","-jar","-Dskypass.instance=dev","-Dapp.server.num=1","app.jar"]

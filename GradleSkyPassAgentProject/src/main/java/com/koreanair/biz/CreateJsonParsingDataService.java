@@ -149,15 +149,20 @@ public class CreateJsonParsingDataService {
 		StringJoiner id = new StringJoiner(",");
 		for (Object obj : exportReasons) {
 			JSONObject data = (JSONObject)obj;
-			resource.add((String)data.get("resource"));
-			action.add((String)data.get("action"));
-			operation.add((String)data.get("operation"));
+			boolean flag = false;
 	        for (Map.Entry<String, Object> entrySet : (Set<Map.Entry<String, Object>>)data.entrySet()) {
 				if(Arrays.stream(exportIdArray).anyMatch(entrySet.getKey()::equals)) {
 					id.add((String)entrySet.getValue());
+					flag = true;
 					break;
 				}
 	        }
+	        if(flag) {
+				resource.add((String)data.get("resource"));
+				action.add((String)data.get("action"));
+				operation.add((String)data.get("operation"));
+	        }
+
 		} 
 		
 		contentVO.put("resource", resource.toString());
