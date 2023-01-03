@@ -11,31 +11,27 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.koreanair.common.util.EnvManager;
+import com.koreanair.common.util.Environment;
+
 public class MyBatisConnectionFactory {
 	private final static Logger log = LoggerFactory.getLogger(MyBatisConnectionFactory.class); 
     private static SqlSessionFactory sqlSessionFactory;
  
     static {
-        try {
-        	
-            String envResource = "config/environments.properties";            
-            Reader envReader = Resources.getResourceAsReader(envResource);            
+        try {        
         	
             String resource = "config/mybatis-config.xml";
             Reader reader = Resources.getResourceAsReader(resource);            
  
             if (sqlSessionFactory == null) {
-            	String skypassInstance = System.getProperty("skypass.instance");
-            	log.debug(String.format("instance name ==> [%s]", skypassInstance));
-            	
-                Properties properties = new Properties();
-                properties.load(envReader);
+                Environment env = EnvManager.getEnvironment();       
                 
                 Properties prop = new Properties();
-                prop.put("driver", properties.getProperty(skypassInstance+".db.driver"));
-                prop.put("url", properties.getProperty(skypassInstance+".db.url"));
-                prop.put("username", properties.getProperty(skypassInstance+".db.username"));
-                prop.put("password", properties.getProperty(skypassInstance+".db.password"));
+                prop.put("driver", env.getProperty("db.driver"));
+                prop.put("url", env.getProperty("db.url"));
+                prop.put("username", env.getProperty("db.username"));
+                prop.put("password", env.getProperty("db.password"));
                 
                 sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader, prop);
             }

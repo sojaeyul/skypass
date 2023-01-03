@@ -29,6 +29,8 @@ import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.MappingJsonFactory;
 import com.koreanair.common.db.MyBatisConnectionFactory;
 import com.koreanair.common.util.ComUtil;
+import com.koreanair.common.util.EnvManager;
+import com.koreanair.common.util.Environment;
 import com.koreanair.dao.SpParsingMasterDAO;
 
 public class CreateJsonParsingDataService {
@@ -44,14 +46,9 @@ public class CreateJsonParsingDataService {
 	public CreateJsonParsingDataService()  throws Exception {
 		this.sqlSessionFactory = MyBatisConnectionFactory.getSqlSessionFactory();
 		this.spParsingMasterDAO = new SpParsingMasterDAO();
-		
-		
-		String envResource = "config/environments.properties";            
-		Reader envReader = Resources.getResourceAsReader(envResource);
-        Properties properties = new Properties();
-        properties.load(envReader);
-        String skypassInstance = System.getProperty("skypass.instance");
-        jsonFilePath = properties.getProperty(skypassInstance+".json.file.path");
+			
+		Environment env = EnvManager.getEnvironment();
+        jsonFilePath = env.getProperty("json.file.path");
 	}
 	
 	

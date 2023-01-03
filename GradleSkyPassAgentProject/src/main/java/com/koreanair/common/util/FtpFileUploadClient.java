@@ -32,18 +32,13 @@ public class FtpFileUploadClient {
 	public FtpFileUploadClient() throws Exception {
 		ftpClient = new FTPClient();
 		
-		String skypassInstance = System.getProperty("skypass.instance");
-		String envResource = "config/environments.properties";            
-		Reader envReader = Resources.getResourceAsReader(envResource);
-        Properties properties = new Properties();
-        properties.load(envReader);
-        
-		this.serverip = properties.getProperty(skypassInstance+".ftp.ip");
-		this.id = properties.getProperty(skypassInstance+".ftp.id");
-		this.pwd = properties.getProperty(skypassInstance+".ftp.password");
-		this.port = Integer.parseInt(properties.getProperty(skypassInstance+".ftp.port"));
-		this.downLocation = properties.getProperty(skypassInstance+".ftp.down.location");
-		this.workingLocation = properties.getProperty(skypassInstance+".ftp.working.location"); 
+        Environment env = EnvManager.getEnvironment();        
+		this.serverip = env.getProperty("ftp.ip");
+		this.id = env.getProperty("ftp.id");
+		this.pwd = env.getProperty("ftp.password");
+		this.port = Integer.parseInt(env.getProperty("ftp.port"));
+		this.downLocation = env.getProperty("ftp.down.location");
+		this.workingLocation = env.getProperty("ftp.working.location"); 
 	}
 
 	/**

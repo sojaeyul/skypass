@@ -1,11 +1,9 @@
 package com.koreanair;
 
-import java.io.FileReader;
 import java.io.Reader;
 import java.lang.management.ManagementFactory;
 import java.lang.management.MemoryMXBean;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
@@ -28,11 +26,12 @@ import org.quartz.impl.StdSchedulerFactory;
 import org.quartz.impl.matchers.GroupMatcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.yaml.snakeyaml.Yaml;
 
 import com.koreanair.common.quartz.MyJobListener;
 import com.koreanair.common.quartz.MyTriggerListener;
 import com.koreanair.common.util.ComUtil;
+import com.koreanair.common.util.EnvManager;
+import com.koreanair.common.util.Environment;
 
 public class ETLJobLauncher {
  
@@ -86,25 +85,14 @@ public class ETLJobLauncher {
     
     
 	public static void main(String[] args) throws Exception  {
-//		Map<String, Object> propMap = new Yaml().load(new FileReader("application.yaml"));
-//		System.out.println(propMap);			
-//		System.out.println(propMap.get("test"));
+
+		Environment env = EnvManager.getEnvironment();
+		String skypassInstance = env.getProperty("profiles.active");		
+		log.debug(String.format("instance name ==> [%s]", skypassInstance));
 		
-		String envResource = "config/environments.properties";            
-		Reader envReader = Resources.getResourceAsReader(envResource);    
-        Properties properties = new Properties();
-        properties.load(envReader);        
-		String active = properties.getProperty("profiles.active");
-		
-		
-		log.debug(String.format("active name ==> [%s]", active));
-		String skypassInstance = System.getProperty("skypass.instance");
-		String appServerNum = ComUtil.NVL(System.getProperty("app.server.num"));
-        log.debug(String.format("instance name ==> [%s]", skypassInstance));
+		String appServerNum = ComUtil.NVL(System.getProperty("app.server.num"));        
         log.debug(String.format("server number ==> [%s]", appServerNum));
-        log.debug(String.format("profile ==> [%s]", System.getProperty("profile")));
-        
-		
+        		
 		int mb = 1024 * 1024;
 		MemoryMXBean memoryBean = ManagementFactory.getMemoryMXBean();
 		long xmx = memoryBean.getHeapMemoryUsage().getMax() / mb;

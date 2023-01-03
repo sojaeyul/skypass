@@ -24,6 +24,8 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.MappingJsonFactory;
 import com.koreanair.common.util.ComUtil;
+import com.koreanair.common.util.EnvManager;
+import com.koreanair.common.util.Environment;
 import com.koreanair.dao.SpParsingMasterDAO;
 
 public class CreateJsonParsingDataThreadService {
@@ -39,12 +41,8 @@ public class CreateJsonParsingDataThreadService {
 	public CreateJsonParsingDataThreadService()  throws Exception {
 		this.spParsingMasterDAO = new SpParsingMasterDAO();
 		
-		String envResource = "config/environments.properties";            
-		Reader envReader = Resources.getResourceAsReader(envResource);
-        Properties properties = new Properties();
-        properties.load(envReader);
-        String skypassInstance = System.getProperty("skypass.instance");
-        jsonFilePath = properties.getProperty(skypassInstance+".json.file.path");
+        Environment env = EnvManager.getEnvironment();
+        jsonFilePath = env.getProperty("json.file.path");		
 	}
 	
 	
