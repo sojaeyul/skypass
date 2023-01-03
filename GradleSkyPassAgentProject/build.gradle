@@ -11,10 +11,10 @@ plugins {
     id 'java-library'
 }
 
+
 tasks.withType(JavaCompile){ 
     options.encoding = "UTF-8"
 }
-
 
 jar {
 	manifest {
@@ -25,7 +25,9 @@ jar {
 			it.isDirectory() ? it : zipTree(it)
 		}
 	}
+	exclude 'META-INF/*.RSA', 'META-INF/*.SF','META-INF/*.DSA'
 }
+
 
 repositories {
     // Use jcenter for resolving dependencies.
@@ -74,6 +76,8 @@ dependencies {
     compile group: 'com.amazonaws', name: 'aws-java-sdk-s3', version: '1.12.360'	
     // https://mvnrepository.com/artifact/org.modelmapper/modelmapper
     compile group: 'org.modelmapper', name: 'modelmapper', version: '3.1.1'
+	// https://mvnrepository.com/artifact/org.yaml/snakeyaml
+	compile group: 'org.yaml', name: 'snakeyaml', version: '1.33'
 
     compile 'org.slf4j:slf4j-api:1.7.31'
     compile 'ch.qos.logback:logback-core:1.2.3'
@@ -84,4 +88,19 @@ dependencies {
     
 	compileOnly 'org.projectlombok:lombok:1.18.24'
 	annotationProcessor 'org.projectlombok:lombok:1.18.24'
+}
+
+
+sourceSets {
+    if (!project.hasProperty('profile') || !profile) {
+        ext.profile = 'local'
+    }
+    main {
+        java {
+            srcDirs "src/main/java"
+        }
+        resources {
+            srcDirs "src/main/resources", "src/main/resources-env/${profile}"
+        }
+    }
 }
